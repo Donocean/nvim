@@ -71,13 +71,13 @@ noremap <LEADER>tm :TableModeToggle<CR>
 "set plug
 call plug#begin('~/.config/nvim/plugged')
  
-" Plug 'vim-airline/vim-airline'
-" Plug 'preservim/nerdtree'
-" 
-" " Markdown
-" Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-" Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-" 
+Plug 'vim-airline/vim-airline'
+Plug 'preservim/nerdtree'
+
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+
 call plug#end()
 
 " === MarkdownPreview
