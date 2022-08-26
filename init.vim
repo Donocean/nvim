@@ -69,9 +69,6 @@ noremap <LEADER>tm :TableModeToggle<CR>
 
 "set plug
 call plug#begin('~/.config/nvim/plugged')
- 
-" coc
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'vim-airline/vim-airline'
 Plug 'preservim/nerdtree'
@@ -131,58 +128,4 @@ func! CompileRunGcc()
 endfunc
 
 source ~/.config/nvim/snippits.vim
-
-
-
-
-" coc extensions install
-let g:coc_global_extensions = [ 
-\	'coc-clangd', 
-\	'coc-sh',	    
-\   'coc-vimlsp']  
-
-
-
-" --------- coc config --------
-" Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> <LEADER>gd <Plug>(coc-definition)
-nmap <silent> <LEADER>gy <Plug>(coc-type-definition)
-nmap <silent> <LEADER>gi <Plug>(coc-implementation)
-nmap <silent> <LEADER>gr <Plug>(coc-references)
-
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call ShowDocumentation()<CR>
-
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Use <c-space> to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
 
