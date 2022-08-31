@@ -18,6 +18,7 @@ autocmd Filetype markdown inoremap ,l --------<Enter>
 autocmd Filetype markdown xnoremap ,b c****<ESC>2hp 
 autocmd Filetype markdown xnoremap ,d c``<ESC>hp 
 
+" in cpp file visual mod, some snippits
 autocmd Filetype c,cpp xnoremap ,( c()<ESC>hp 
 autocmd Filetype c,cpp xnoremap ,[ c[]<ESC>hp 
 autocmd Filetype c,cpp xnoremap ," c""<ESC>hp 
