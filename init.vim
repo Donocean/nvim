@@ -49,6 +49,10 @@ noremap <LEADER>tq :tabc<CR>
 " close all tab but this
 noremap	<LEADER>to :tabo<CR>
 
+" jump tab page
+noremap ]t gt
+noremap [t gT
+
 " -------------- split --------------
 " open a vertical split window in the right
 " map <LEADER>vs :set splitright<CR>:vsplit<CR>:edit 
@@ -70,13 +74,14 @@ map <C-j> :res-5<CR>
 " toggle nerdtree
 nnoremap tt :NERDTreeToggle<CR>
 
-" vim_table_mode(markdown plug)
+" vim_table_mode(markdown)
 noremap <LEADER>tm :TableModeToggle<CR>
 
 " fzf
 noremap <LEADER>p :GFiles<CR>
 noremap <LEADER>b :Buffers<CR>
 noremap <LEADER>m :Marks<CR>
+imap \ <plug>(fzf-complete-path)
 
 "---------------key map over ---------------
 
@@ -86,12 +91,24 @@ call plug#begin('~/.config/nvim/plugged')
 " file tree
 Plug 'preservim/nerdtree'
 
+" display yank history
+Plug 'junegunn/vim-peekaboo'
+
 " scheme
 Plug 'morhetz/gruvbox'
+
+"comment
+" press gcc under normal mod 
+" press gc under visual mod
+" press gcap to comment a }
+Plug 'tpope/vim-commentary'
 
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" nice tabline
+Plug 'mg979/vim-xtabline'
 
 " coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -101,6 +118,9 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
 call plug#end()
+
+" let g:coc_global_extensions = ['coc-yank']
+" nnoremap <silent><space>y :<c-u>CocList -A --normal yank<cr>
 
 " set vim scheme to gruvbox 
 colorscheme gruvbox

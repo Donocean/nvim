@@ -23,4 +23,3 @@ autocmd Filetype c,cpp xnoremap ,( c()<ESC>hp
 autocmd Filetype c,cpp xnoremap ,[ c[]<ESC>hp 
 autocmd Filetype c,cpp xnoremap ," c""<ESC>hp 
 autocmd Filetype c,cpp xnoremap ,' c''<ESC>hp 
-
