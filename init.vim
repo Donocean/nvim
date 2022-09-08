@@ -48,7 +48,6 @@ noremap <LEADER>te :tabe<CR>:FZF<CR>
 noremap <LEADER>tq :tabc<CR>
 " close all tab but this
 noremap	<LEADER>to :tabo<CR>
-
 " jump tab page
 noremap ]t gt
 noremap [t gT
@@ -81,7 +80,7 @@ noremap <LEADER>tm :TableModeToggle<CR>
 noremap <LEADER>p :GFiles<CR>
 noremap <LEADER>b :Buffers<CR>
 noremap <LEADER>m :Marks<CR>
-imap \ <plug>(fzf-complete-path)
+imap ,\ <plug>(fzf-complete-path)
 
 "---------------key map over ---------------
 
@@ -106,13 +105,13 @@ Plug 'tpope/vim-commentary'
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
+ 
 " nice tabline
 Plug 'mg979/vim-xtabline'
-
+  
 " coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+ 
 " Markdown
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
@@ -136,7 +135,7 @@ let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
-let g:mkdp_browser = ''
+let g:mkdp_browser = 'chromium'
 let g:mkdp_echo_preview_url = 0
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
