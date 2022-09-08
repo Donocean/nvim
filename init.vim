@@ -41,13 +41,13 @@ set clipboard+=unnamedplus
 " no high light search
 noremap <LEADER><CR> :nohlsearch<CR>
 
+" You can use [:q] or [ctrl-w_q] or [ctrl-w_c](more safe) to close windows(like tab_windows/split_windows)
+" special: [ctrl-w_o] close all windows but this one
+" USE [ctrl-w-T] to move split_window to the new tab_windows
+
 " -------- tab --------
 " open a new tab
 noremap <LEADER>te :tabe<CR>:FZF<CR>
-" close this tab
-noremap <LEADER>tq :tabc<CR>
-" close all tab but this
-noremap	<LEADER>to :tabo<CR>
 " jump tab page
 noremap ]t gt
 noremap [t gT
@@ -55,10 +55,10 @@ noremap [t gT
 " -------------- split --------------
 " open a vertical split window in the right
 " map <LEADER>vs :set splitright<CR>:vsplit<CR>:edit 
-map <LEADER>vs :set splitright<CR>:vsplit<CR>:FZF<CR>
+map <C-w>v :set splitright<CR>:vsplit<CR>
 " open a split window in the below
 " map <LEADER>s :set splitbelow<CR>:split<CR>:edit 
-map <LEADER>s :set splitbelow<CR>:split<CR>:FZF<CR> 
+map <C-w>s :set splitbelow<CR>:split<CR>
 
 " -------------- modify split window size  --------------
 " modify vsplit window size to left 
@@ -118,6 +118,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
+" easy motion
+Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " let g:coc_global_extensions = ['coc-yank']
@@ -129,10 +131,12 @@ set background=dark
 " set CocSearch font color
 highlight CocSearch ctermfg=brown
 
-
 " === Rainbow Parentheses
 "set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1 
+
+" === easymotion
+nmap <LEADER>s <Plug>(easymotion-s2)
 
 " === MarkdownPreview
 let g:mkdp_auto_start = 0
