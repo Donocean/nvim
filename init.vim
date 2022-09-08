@@ -93,10 +93,15 @@ Plug 'preservim/nerdtree'
 " display yank history
 Plug 'junegunn/vim-peekaboo'
 
+" -----------vim look style---------
 " scheme
 Plug 'morhetz/gruvbox'
-
-"comment
+" nice tabline
+Plug 'mg979/vim-xtabline'
+" rainbow brackets
+Plug 'luochen1990/rainbow'
+  
+" comment
 " press gcc under normal mod 
 " press gc under visual mod
 " press gcap to comment a }
@@ -106,9 +111,6 @@ Plug 'tpope/vim-commentary'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
  
-" nice tabline
-Plug 'mg979/vim-xtabline'
-  
 " coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
  
@@ -121,12 +123,16 @@ call plug#end()
 " let g:coc_global_extensions = ['coc-yank']
 " nnoremap <silent><space>y :<c-u>CocList -A --normal yank<cr>
 
-" set vim scheme to gruvbox 
+" === Scheme
 colorscheme gruvbox
 set background=dark
 " set CocSearch font color
 highlight CocSearch ctermfg=brown
 
+
+" === Rainbow Parentheses
+"set to 0 if you want to enable it later via :RainbowToggle
+let g:rainbow_active = 1 
 
 " === MarkdownPreview
 let g:mkdp_auto_start = 0
