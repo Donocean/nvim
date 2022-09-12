@@ -3,6 +3,11 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 
+" <LEADER> = space
+let mapleader=" "
+
+set encoding=utf-8
+
 " syntax highlight
 syntax on
 
@@ -10,11 +15,7 @@ syntax on
 set number
 set relativenumber
 
-" <LEADER> = space
-let mapleader=" "
-
 set scrolloff=5
-set encoding=utf-8
 
 " tab = 4
 set tabstop=4
@@ -38,6 +39,9 @@ set smartcase
 set clipboard+=unnamedplus
 
 "---------------key map ---------------
+" save file
+noremap <C-s>  :w<CR>
+
 " no high light search
 noremap <LEADER><CR> :nohlsearch<CR>
 
@@ -81,6 +85,10 @@ noremap <LEADER>p :GFiles<CR>
 noremap <LEADER>b :Buffers<CR>
 noremap <LEADER>m :Marks<CR>
 imap ,\ <plug>(fzf-complete-path)
+
+" ---------- command map--------------------
+" run :Bd to close alll other buffers 
+command Bd :up | %bd | e#
 
 "---------------key map over ---------------
 
@@ -145,7 +153,7 @@ let g:mkdp_refresh_slow = 0
 let g:mkdp_command_for_global = 0
 let g:mkdp_open_to_the_world = 0
 let g:mkdp_open_ip = ''
-let g:mkdp_browser = 'chromium'
+let g:mkdp_browser = ''
 let g:mkdp_echo_preview_url = 0
 let g:mkdp_browserfunc = ''
 let g:mkdp_preview_options = {
