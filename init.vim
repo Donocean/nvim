@@ -126,8 +126,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
-" easy motion
-Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 " let g:coc_global_extensions = ['coc-yank']
@@ -142,9 +140,6 @@ highlight CocSearch ctermfg=brown
 " === Rainbow Parentheses
 "set to 0 if you want to enable it later via :RainbowToggle
 let g:rainbow_active = 1 
-
-" === easymotion
-nmap <LEADER>s <Plug>(easymotion-s2)
 
 " === MarkdownPreview
 let g:mkdp_auto_start = 0
