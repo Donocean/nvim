@@ -171,11 +171,11 @@ map r :call CompileRunGcc()<CR>
 func! CompileRunGcc()
   exec "w"
   if &filetype == 'c'
-    exec "!gcc % -o %<"
-    exec "!time ./%<"
+    exec "!gcc % -o %<.out"
+    exec "!time ./%<.out"
   elseif &filetype == 'cpp'
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
+    exec "!g++ % -o %<.out"
+    exec "!time ./%<.out"
   elseif &filetype == 'java'
     exec "!javac %"
     exec "!time java %<"
