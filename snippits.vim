@@ -23,3 +23,10 @@ autocmd Filetype c,cpp xnoremap ,( c()<ESC>hp
 autocmd Filetype c,cpp xnoremap ,[ c[]<ESC>hp 
 autocmd Filetype c,cpp xnoremap ," c""<ESC>hp 
 autocmd Filetype c,cpp xnoremap ,' c''<ESC>hp 
+
+" some bracket complete
+inoremap ( ()<ESC>i
+inoremap { {}<ESC>i
+inoremap [ []<ESC>i
+inoremap " ""<ESC>i
+inoremap ' ''<ESC>i

@@ -3,13 +3,14 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 
+" syntax highlight
+syntax on
+
 " <LEADER> = space
 let mapleader=" "
 
+" UTF-8
 set encoding=utf-8
-
-" syntax highlight
-syntax on
 
 " display line_number
 set number
@@ -84,15 +85,17 @@ noremap <LEADER>tm :TableModeToggle<CR>
 noremap <LEADER>p :GFiles<CR>
 noremap <LEADER>b :Buffers<CR>
 noremap <LEADER>m :Marks<CR>
-imap ,\ <plug>(fzf-complete-path)
+imap \\ <plug>(fzf-complete-path)
+
+" clangd 
+autocmd Filetype c,cpp noremap <LEADER>sh :set splitright<CR>:CocCommand clangd.switchSourceHeader vsplit<CR>
 
 " ---------- command map--------------------
 " run :Bd to close alll other buffers 
 command Bd :up | %bd | e#
 
-"---------------key map over ---------------
 
-" plug
+"--------------- Plugs ---------------
 call plug#begin('~/.config/nvim/plugged')
 
 " file tree
@@ -104,8 +107,6 @@ Plug 'junegunn/vim-peekaboo'
 " -----------vim look style---------
 " scheme
 Plug 'morhetz/gruvbox'
-" nice tabline
-Plug 'mg979/vim-xtabline'
 " rainbow brackets
 Plug 'luochen1990/rainbow'
   
@@ -114,6 +115,12 @@ Plug 'luochen1990/rainbow'
 " press gc under visual mod
 " press gcap to comment a }
 Plug 'tpope/vim-commentary'
+
+" press cs"' 
+Plug 'tpope/vim-surround'
+
+" press <c-n>
+Plug 'mg979/vim-visual-multi'
 
 " fzf
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -128,8 +135,8 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 
 call plug#end()
 
-" let g:coc_global_extensions = ['coc-yank']
-" nnoremap <silent><space>y :<c-u>CocList -A --normal yank<cr>
+let g:coc_global_extensions = [
+\ 'coc-clangd']
 
 " === Scheme
 colorscheme gruvbox
@@ -189,6 +196,9 @@ func! CompileRunGcc()
   endif
 endfunc
 
+" fzf
+let g:fzf_preview_window = ['right,50%', 'ctrl-/']
+
 " === CoC
 " Use tab for trigger completion 
 inoremap <silent><expr> <TAB>
@@ -206,7 +216,46 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-p> coc#refresh()
+else
+  inoremap <silent><expr> <c-p> coc#refresh()
+endif
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
 " some snippits
 source ~/.config/nvim/snippits.vim
-
-

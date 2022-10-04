@@ -1,0 +1,17 @@
+{
+	"suggest.noselect": true,
+	"suggest.enablePreselect": false,
+	"suggest.completionItemKindLabels": {
+		"class": "\uf0e8",
+		"struct": "\uf1b3",
+		"enum": "\uf435",
+		"enumMember": "\uf02b",
+		"function": "\u0192",
+		"keyword": "\uf80a",
+		"method": "\uf6a6",
+		"snippet": "\ue60b",
+		"value": "\uf89f",
+		"variable": "\ue62e"
+	},
+}
+
