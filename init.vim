@@ -43,6 +43,9 @@ set clipboard+=unnamedplus
 " save file
 noremap <C-s>  :w<CR>
 
+" jump to the end of line
+noremap ) $
+
 " no high light search
 noremap <LEADER><CR> :nohlsearch<CR>
 
@@ -94,7 +97,6 @@ autocmd Filetype c,cpp noremap <LEADER>sh :set splitright<CR>:CocCommand clangd.
 " run :Bd to close alll other buffers 
 command Bd :up | %bd | e#
 
-
 "--------------- Plugs ---------------
 call plug#begin('~/.config/nvim/plugged')
 
@@ -103,6 +105,8 @@ Plug 'preservim/nerdtree'
 
 " display yank history
 Plug 'junegunn/vim-peekaboo'
+
+Plug 'gcmt/wildfire.vim'
 
 " -----------vim look style---------
 " scheme
@@ -136,7 +140,8 @@ Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 call plug#end()
 
 let g:coc_global_extensions = [
-\ 'coc-clangd']
+\ 'coc-clangd',
+\ 'coc-pairs']
 
 " === Scheme
 colorscheme gruvbox
@@ -226,9 +231,9 @@ endfunction
 
 " Use <c-space> to trigger completion.
 if has('nvim')
-  inoremap <silent><expr> <c-p> coc#refresh()
+  inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <silent><expr> <c-p> coc#refresh()
+  inoremap <silent><expr> <c-space> coc#refresh()
 endif
 
 " Use K to show documentation in preview window.

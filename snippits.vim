@@ -1,4 +1,3 @@
-"autocmd Filetype markdown map <leader>w yiWi[<esc>Ea](<esc>pa)
 autocmd Filetype markdown inoremap ,f <Esc>/<++><CR>:nohlsearch<CR>c4l
 autocmd Filetype markdown inoremap ,n ---<Enter><Enter>
 autocmd Filetype markdown inoremap ,b ****<++><Esc>F*hi
@@ -14,19 +13,7 @@ autocmd Filetype markdown inoremap ,2 ##<Space>
 autocmd Filetype markdown inoremap ,3 ###<Space>
 autocmd Filetype markdown inoremap ,4 ####<Space>
 autocmd Filetype markdown inoremap ,l --------<Enter>
-
+"virtual mod
 autocmd Filetype markdown xnoremap ,b c****<ESC>2hp 
 autocmd Filetype markdown xnoremap ,d c``<ESC>hp 
 
-" in cpp file visual mod, some snippits
-autocmd Filetype c,cpp xnoremap ,( c()<ESC>hp 
-autocmd Filetype c,cpp xnoremap ,[ c[]<ESC>hp 
-autocmd Filetype c,cpp xnoremap ," c""<ESC>hp 
-autocmd Filetype c,cpp xnoremap ,' c''<ESC>hp 
-
-" some bracket complete
-inoremap ( ()<ESC>i
-inoremap { {}<ESC>i
-inoremap [ []<ESC>i
-inoremap " ""<ESC>i
-inoremap ' ''<ESC>i
