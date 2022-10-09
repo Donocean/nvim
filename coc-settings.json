@@ -3,15 +3,20 @@
 	"suggest.enablePreselect": false,
 	"suggest.completionItemKindLabels": {
 		"class": "\uf0e8",
-		"struct": "\uf1b3",
+		"struct": "\ufb44",
+		"field": "\uf93d",
+		"method": "\uf6a6",
 		"enum": "\uf435",
 		"enumMember": "\uf02b",
+		"constant": "\uf8fe",
 		"function": "\u0192",
 		"keyword": "\uf80a",
-		"method": "\uf6a6",
+		"reference": "\ufa46",
 		"snippet": "\ue60b",
+		"text": "\ue612",
 		"value": "\uf89f",
 		"variable": "\ue62e"
 	}
 }
+
 
