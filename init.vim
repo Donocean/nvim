@@ -43,7 +43,9 @@ set clipboard+=unnamedplus
 " save file
 noremap <C-s>  :w<CR>
 
-" jump to the end of line
+" jump to the start of the line
+noremap 0 ^
+" jump to the end of the line
 noremap ) $
 
 " no high light search
@@ -119,6 +121,8 @@ Plug 'luochen1990/rainbow'
 " press gc under visual mod
 " press gcap to comment a }
 Plug 'tpope/vim-commentary'
+
+Plug 'babaybus/DoxygenToolkit.vim'
 
 " press cs"' 
 Plug 'tpope/vim-surround'
