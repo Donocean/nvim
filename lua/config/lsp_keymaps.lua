@@ -7,6 +7,7 @@ function M.get()
   local format = function()
     require("config.format").format({ force = true })
   end
+
   if not M._keys then
   ---@class PluginLspKeys
     -- stylua: ignore

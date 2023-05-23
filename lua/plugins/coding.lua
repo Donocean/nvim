@@ -128,7 +128,7 @@ return {
     -- wildfire
     {
         "gcmt/wildfire.vim",
-        keys = { "<cr>" }
+        keys = { "<cr>" },
     },
 
 }

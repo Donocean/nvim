@@ -9,4 +9,4 @@ require("config.autocmds")
 require("config.keymaps")
 
 -- load scheme(tokyonight & gruvbox)
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme gruvbox]])

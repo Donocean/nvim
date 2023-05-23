@@ -4,8 +4,6 @@ return {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-            { "folke/neodev.nvim",  opts = { experimental = { pathStrict = true } } },
             "mason.nvim",
             "williamboman/mason-lspconfig.nvim",
             {
@@ -173,7 +171,6 @@ return {
             ensure_installed = {
                 "stylua",
                 "shfmt",
-                "clangd",
             },
         },
         ---@param opts MasonSettings | {ensure_installed: string[]}
@@ -192,6 +189,23 @@ return {
                 mr.refresh(ensure_installed)
             else
                 ensure_installed()
+            end
+
+            -- Because there isn't clangd. So i use gitee to download  clangd rapidly.
+            local c_lsp = vim.fn.stdpath("data") .. "/mason/packages/clangd"
+            if not vim.loop.fs_stat(c_lsp) then
+                vim.fn.system({
+                    "git",
+                    "clone",
+                    "https://gitee.com/Donocean/clangd.git",
+                    lazypath,
+                })
+
+                -- change clangd bin permission and link the bin file
+                local clangd_path = c_lsp .. "/bin/clangd"
+                local target_path = vim.fn.stdpath("data") .. "/mason/bin/clangd"
+                vim.fn.system({ "chmod", "u+x", clangd_path, })
+                vim.fn.system({ "ln", "-s", clangd_path, target_path, })
             end
         end,
     },
