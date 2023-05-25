@@ -3,6 +3,7 @@ local Util = require("util")
 return {
 
     -- file explorer
+    { "MunifTanjim/nui.nvim", lazy = true }, -- dependencies
     {
         "nvim-neo-tree/neo-tree.nvim",
         cmd = "Neotree",

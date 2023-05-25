@@ -25,6 +25,10 @@ require("lazy").setup({
         version = false, -- always use the latest git commit
         -- version = "*", -- try installing the latest stable version for plugins that support semver
     },
+    git = {
+        -- A way to use fastgit to clone plugins
+        url_format = "https://github.com/%s.git",
+    },
     performance = {
         rtp = {
             -- disable some rtp plugins
