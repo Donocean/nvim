@@ -198,7 +198,7 @@ return {
                     "git",
                     "clone",
                     "https://gitee.com/Donocean/clangd.git",
-                    lazypath,
+                    c_lsp,
                 })
 
                 -- change clangd bin permission and link the bin file
