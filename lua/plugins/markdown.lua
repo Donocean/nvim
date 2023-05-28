@@ -1,7 +1,6 @@
 return {
     {
         "dhruvasagar/vim-table-mode",
-        ft = "markdown",
         cmd = "TableModeToggle",
         keys = { {"<leader>tb", "<cmd>TableModeToggle<cr>", desc = "Toggle markdown table"}, },
     },
