@@ -106,8 +106,6 @@ local compile = function()
         vim.cmd("!time ./%<.out")
     elseif substr == "lua" then
         vim.cmd("!lua %")
-    elseif substr == "markdown" then
-        vim.cmd("MarkdownPreview")
     end
 end
 map("n", "<leader>r", compile, { desc = "compile current file" })
