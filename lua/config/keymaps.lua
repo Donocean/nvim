@@ -24,8 +24,8 @@ map("n", "<C-Right>", "<cmd>vertical resize+5<cr>", { desc = "Increase window wi
 map("n", "<leader><cr>", "<cmd>nohlsearch<cr>", { desc = "clear hlsearch" })
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
-map("n", "0", "^", { desc = "start of the line" })
-map("n", ")", "$", { desc = "end of the line" })
+map({"n", "v"}, "0", "^", { desc = "start of the line" })
+map({"n", "v"}, ")", "$", { desc = "end of the line" })
 
 -- save file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
@@ -109,3 +109,6 @@ local compile = function()
     end
 end
 map("n", "<leader>r", compile, { desc = "compile current file" })
+
+
+map("n", "<leader>h","<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile"})
