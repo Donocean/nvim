@@ -31,6 +31,7 @@ map({"n", "v"}, ")", "$", { desc = "end of the line" })
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
 -- quit
 map("n", "<leader>q", "<c-w>q", { desc = "Quit window" })
+map("i", "<c-c>", "<esc>")
 
 -- tab
 map("n", "<leader><tab>", ":tabe<cr>", { desc = "open a new tab" })

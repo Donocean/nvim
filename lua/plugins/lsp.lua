@@ -151,14 +151,6 @@ return {
                 mlsp.setup({ ensure_installed = ensure_installed })
                 mlsp.setup_handlers({ setup })
             end
-
-            if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
-                local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
-                Util.lsp_disable("tsserver", is_deno)
-                Util.lsp_disable("denols", function(root_dir)
-                    return not is_deno(root_dir)
-                end)
-            end
         end,
     },
 
