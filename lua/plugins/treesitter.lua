@@ -23,6 +23,8 @@ return {
                 "luap",
                 "markdown",
                 "markdown_inline",
+                "make",
+                "cmake",
                 "vim",
                 "vimdoc",
             },
