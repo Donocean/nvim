@@ -111,5 +111,4 @@ local compile = function()
 end
 map("n", "<leader>r", compile, { desc = "compile current file" })
 
-
 map("n", "<leader>h","<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile"})
