@@ -73,7 +73,7 @@ return {
         event = "VeryLazy",
         keys = {
             {
-                "[[",
+                "[c",
                 function()
                     require("treesitter-context").go_to_context()
                 end,
