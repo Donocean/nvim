@@ -47,6 +47,7 @@ opt.shortmess:append({ W = true, I = true, c = true })
 opt.sidescrolloff = 8              -- Columns of context
 opt.signcolumn = "yes"             -- Always show the signcolumn, otherwise it would shift the text each time
 opt.termguicolors = true           -- True color support
+opt.guicursor = ""                 -- user fat cursor in the insert mode
 opt.timeoutlen = 300
 opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5                -- Minimum window width

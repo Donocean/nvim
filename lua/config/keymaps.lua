@@ -11,6 +11,9 @@ local function map(mode, lhs, rhs, opts)
     end
 end
 
+-- greatest remap ever
+map("x", "<leader>p", "\"_dP", {desc = "paste without missing object"})
+
 -- better up/down
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
