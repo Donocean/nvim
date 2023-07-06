@@ -132,4 +132,8 @@ return {
         keys = { "<cr>" },
     },
 
+    {
+        "tpope/vim-repeat",
+        keys = { "." },
+    }
 }

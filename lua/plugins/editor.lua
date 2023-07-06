@@ -9,21 +9,19 @@ return {
         cmd = "Neotree",
         keys = {
             {
-                "<leader>fe",
+                "<c-e>", -- <c-e> default is scroll down one line 
                 function()
                     require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
                 end,
                 desc = "Explorer NeoTree (root dir)",
             },
             {
-                "<leader>fE",
+                "<c-E>",
                 function()
                     require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
                 end,
                 desc = "Explorer NeoTree (cwd)",
             },
-            { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
-            { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)",      remap = true },
         },
         deactivate = function()
             vim.cmd([[Neotree close]])
@@ -45,7 +43,7 @@ return {
             },
             window = {
                 mappings = {
-                    ["<space>"] = "none",
+                    ["<space>"] = { "open", nowait = true },
                 },
             },
             default_component_configs = {
@@ -179,7 +177,7 @@ return {
                             return require("telescope.actions").cycle_history_prev(...)
                         end,
                         ["<C-f>"] = function(...)
-                            return require("telescope.actions").preview_scrolling_down(...)
+                           return require("telescope.actions").preview_scrolling_down(...)
                         end,
                         ["<C-b>"] = function(...)
                             return require("telescope.actions").preview_scrolling_up(...)
@@ -227,7 +225,7 @@ return {
         end,
     },
 
-    -- references
+    -- hightlight same symbols
     {
         "RRethy/vim-illuminate",
         event = { "BufReadPost", "BufNewFile" },
@@ -241,21 +239,21 @@ return {
                 end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
             end
 
-            map("]n", "next")
-            map("[n", "prev")
+            map("]r", "next")
+            map("[r", "prev")
 
             -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
             vim.api.nvim_create_autocmd("FileType", {
                 callback = function()
                     local buffer = vim.api.nvim_get_current_buf()
-                    map("]n", "next", buffer)
-                    map("[n", "prev", buffer)
+                    map("]r", "next", buffer)
+                    map("[r", "prev", buffer)
                 end,
             })
         end,
         keys = {
-            { "]n", desc = "Next Reference" },
-            { "[n", desc = "Prev Reference" },
+            { "]r", desc = "Next Reference" },
+            { "[r", desc = "Prev Reference" },
         },
     },
 
@@ -266,6 +264,43 @@ return {
         keys = {
             { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
             { "<leader>bD", function() require("mini.bufremove").delete(0, true) end,  desc = "Delete Buffer (Force)" },
+        },
+    },
+
+    -- git signs
+    {
+        "lewis6991/gitsigns.nvim",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {
+            signs = {
+                add = { text = "▎" },
+                change = { text = "▎" },
+                delete = { text = "" },
+                topdelete = { text = "" },
+                changedelete = { text = "▎" },
+                untracked = { text = "▎" },
+            },
+            on_attach = function(buffer)
+                local gs = package.loaded.gitsigns
+
+                local function map(mode, l, r, desc)
+                    vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
+                end
+
+                -- stylua: ignore start
+                map("n", "]h", gs.next_hunk, "Next Hunk")
+                map("n", "[h", gs.prev_hunk, "Prev Hunk")
+                map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage Hunk")
+                map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset Hunk")
+                map("n", "<leader>ghS", gs.stage_buffer, "Stage Buffer")
+                map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo Stage Hunk")
+                map("n", "<leader>ghR", gs.reset_buffer, "Reset Buffer")
+                map("n", "<leader>ghp", gs.preview_hunk, "Preview Hunk")
+                map("n", "<leader>ghb", function() gs.blame_line({ full = true }) end, "Blame Line")
+                map("n", "<leader>ghd", gs.diffthis, "Diff This")
+                map("n", "<leader>ghD", function() gs.diffthis("~") end, "Diff This ~")
+                map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+            end,
         },
     },
 }

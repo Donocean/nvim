@@ -2,7 +2,6 @@ local Util = require("util")
 
 local function map(mode, lhs, rhs, opts)
     local keys = require("lazy.core.handler").handlers.keys
-    ---@cast keys LazyKeysHandler
     -- do not create the keymap if a lazy keys handler exists
     if not keys.active[keys.parse({ lhs, mode = mode }).id] then
         opts = opts or {}
@@ -90,7 +89,7 @@ map("n", "<leader>gg", function() Util.float_term({ "lazygit" }, { cwd = Util.ge
 map("n", "<leader>gG", function() Util.float_term({ "lazygit" }, { esc_esc = false }) end, { desc = "Lazygit (cwd)" })
 
 -- toggle options
-map("n", "<leader>uf", require("config.format").toggle, { desc = "Toggle format on Save" })
+map("n", "<leader>uf", require("plugins.lsp.format").toggle, { desc = "Toggle format on Save" })
 map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
 map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
 map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })

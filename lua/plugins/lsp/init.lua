@@ -74,11 +74,11 @@ return {
         config = function(_, opts)
             local Util = require("util")
             -- setup autoformat
-            require("config.format").autoformat = opts.autoformat
+            require("plugins.lsp.format").autoformat = opts.autoformat
             -- setup formatting and keymaps
             Util.on_attach(function(client, buffer)
-                require("config.format").on_attach(client, buffer)
-                require("config.lsp_keymaps").on_attach(client, buffer)
+                require("plugins.lsp.format").on_attach(client, buffer)
+                require("plugins.lsp.keymaps").on_attach(client, buffer)
             end)
 
             -- diagnostics
