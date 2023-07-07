@@ -154,11 +154,11 @@ return {
                 selection_caret = " ",
                 mappings = {
                     i = {
-                        ["<c-t>"] = function(...)
-                            return require("trouble.providers.telescope").open_with_trouble(...)
+                        ["<C-j>"] = function(...)
+                            require("telescope.actions").move_selection_next(...)
                         end,
-                        ["<a-t>"] = function(...)
-                            return require("trouble.providers.telescope").open_selected_with_trouble(...)
+                        ["<C-k>"] = function(...)
+                            require("telescope.actions").move_selection_previous(...)
                         end,
                         ["<a-i>"] = function()
                             local action_state = require("telescope.actions.state")
@@ -170,10 +170,10 @@ return {
                             local line = action_state.get_current_line()
                             Util.telescope("find_files", { hidden = true, default_text = line })()
                         end,
-                        ["<C-Down>"] = function(...)
+                        ["<Down>"] = function(...)
                             return require("telescope.actions").cycle_history_next(...)
                         end,
-                        ["<C-Up>"] = function(...)
+                        ["<Up>"] = function(...)
                             return require("telescope.actions").cycle_history_prev(...)
                         end,
                         ["<C-f>"] = function(...)

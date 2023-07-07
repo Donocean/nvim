@@ -20,7 +20,7 @@ return {
         -- stylua: ignore
         keys = {
             {
-                "<c-l>",
+                "<tab>",
                 function()
                     return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
                 end,
@@ -28,8 +28,8 @@ return {
                 silent = true,
                 mode = "i",
             },
-            { "<c-l>",   function() require("luasnip").jump(1) end,  mode = "s" },
-            { "<c-h>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+            { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
+            { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
         },
     },
 
@@ -56,8 +56,8 @@ return {
                     end,
                 },
                 mapping = cmp.mapping.preset.insert({
-                    ["<tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                    ["<s-tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+                    ["<c-j>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+                    ["<c-k>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
@@ -134,6 +134,6 @@ return {
 
     {
         "tpope/vim-repeat",
-        keys = { "." },
+        event = "VeryLazy"
     }
 }
