@@ -12,4 +12,9 @@ return {
 		"morhetz/gruvbox",
 		lazy = true,
 	},
+
+    {
+        'theniceboy/nvim-deus',
+        lazy = true,
+    },
 }
