@@ -13,26 +13,25 @@ end
 -- greatest remap ever
 map("x", "<leader>p", "\"_dP", {desc = "paste without missing object"})
 
--- better up/down
+-- better up/down when use wrap
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
--- Resize window using <ctrl> arrow keys
+-- Resize window using <ctrl>+<arrow> keys
 map("n", "<C-Up>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
 map("n", "<C-Down>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
 map("n", "<C-Left>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
 map("n", "<C-Right>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
 
-map("n", "<leader><cr>", "<cmd>nohlsearch<cr>", { desc = "clear hlsearch" })
+map("n", "<leader><cr>", "<cmd>nohlsearch<cr>", { desc = "Clear hlsearch" })
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
-map({"n", "v"}, "0", "^", { desc = "start of the line" })
-map({"n", "v"}, ")", "$", { desc = "end of the line" })
+map({"n", "v"}, "0", "^", { desc = "Start of the line" })
+map({"n", "v"}, ")", "$", { desc = "End of the line" })
 
 -- save file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
--- quit
-map("n", "<leader>q", "<c-w>q", { desc = "Quit window" })
+-- better ctrl-c when use visul vertical mod to add some text
 map("i", "<c-c>", "<esc>")
 
 -- tab
@@ -113,3 +112,9 @@ end
 map("n", "<leader>r", compile, { desc = "compile current file" })
 
 map("n", "<leader>h","<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile"})
+map("n", "<leader>cc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "rename word under current cursor"})
+
+map('n', '<leader>\\', function()
+    local builtin = require('telescope.builtin')
+	builtin.grep_string({ search = vim.fn.input("Grep > ") })
+end, { desc = "grep string(/) in the current file using telescope"})
