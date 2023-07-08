@@ -132,6 +132,7 @@ return {
         keys = { "<cr>" },
     },
 
+    -- enhance dot(.)
     {
         "tpope/vim-repeat",
         event = "VeryLazy"

@@ -8,8 +8,8 @@ require("config.lazy")
 require("config.autocmds")
 require("config.keymaps")
 
--- load scheme(tokyonight & gruvbox & deus)
-vim.cmd.colorscheme("deus")
+-- load scheme(gruvbox & everforest)
+vim.cmd.colorscheme("everforest")
 
 -- background transparent
 -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
