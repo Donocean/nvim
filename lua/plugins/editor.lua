@@ -9,14 +9,14 @@ return {
         cmd = "Neotree",
         keys = {
             {
-                "<c-e>", -- <c-e> default is scroll down one line 
+                "<leader>e", -- because i map so many <ctrl> key which makes my little finger poor
                 function()
                     require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
                 end,
                 desc = "Explorer NeoTree (root dir)",
             },
             {
-                "<c-E>",
+                "<leader>E",
                 function()
                     require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
                 end,

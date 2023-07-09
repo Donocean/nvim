@@ -1,5 +1,16 @@
 local Util = require("util")
 
+---@mode can be following parameters
+-- nmap Normal
+-- vmap Visual and Select
+-- smap Select
+-- xmap Visual
+-- omap Operator-pending
+-- map! Insert and Command-line
+-- imap Insert
+-- lmap Insert, Command-line, Lang-Arg
+-- cmap Command-line
+-- tmap Terminal
 local function map(mode, lhs, rhs, opts)
     local keys = require("lazy.core.handler").handlers.keys
     -- do not create the keymap if a lazy keys handler exists
@@ -34,10 +45,15 @@ map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
 -- better ctrl-c when use visul vertical mod to add some text
 map("i", "<c-c>", "<esc>")
 
--- tab
-map("n", "<leader><tab>", ":tabe<cr>", { desc = "open a new tab" })
-map("n", "<c-l>", "gt", { desc = "next tab" })
-map("n", "<c-h>", "gT", { desc = "previous tab" })
+-- tabs/windows
+-- map("n", "]w", "gt", { desc = "next tab" })
+-- map("n", "[w", "gT", { desc = "previous tab" })
+-- because we reraly used tab move, so only one keybinding
+map("n", "<leader><tab>", "gt", { desc = "next tab" })
+map("n", "<c-h>", "<c-w>h", { desc = "swith to the left window" })
+map("n", "<c-l>", "<c-w>l", { desc = "swith to the right window" })
+map("n", "<c-j>", "<c-w>j", { desc = "swith to the lower window" })
+map("n", "<c-k>", "<c-w>k", { desc = "swith to the upper window" })
 -- special: [ctrl-w_o] close all windows but this one
 -- USE [ctrl-w-T] to move split_window to the new tab_windows
 
