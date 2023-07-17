@@ -32,7 +32,10 @@ return {
             -- add any global capabilities here
             capabilities = {},
             -- Automatically format on save
-            autoformat = false,
+            autoformat = true,
+            -- disable diagnostics
+            diagnostics_enabled = false,
+
             -- options for vim.lsp.buf.format
             -- `bufnr` and `filter` is handled by the LazyVim formatter,
             -- but can be also overridden when specified
@@ -100,6 +103,12 @@ return {
             end
 
             vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+            if opts.diagnostics_enabled then
+                vim.diagnostic.enable()
+            else
+                vim.diagnostic.disable()
+            end
 
             local servers = opts.servers
             local capabilities = vim.tbl_deep_extend(
