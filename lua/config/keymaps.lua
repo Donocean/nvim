@@ -87,6 +87,9 @@ map("v", ">", ">gv")
 -- lazy
 map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 
+map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
+map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
+
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
     map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
