@@ -24,6 +24,9 @@ end
 -- greatest remap ever
 map("x", "<leader>p", "\"_dP", {desc = "paste without missing object"})
 
+-- better paste
+map("i", "<c-v>", "<c-r>+", {desc = "paste in the insert mode"})
+
 -- better up/down when use wrap
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -115,20 +118,25 @@ map("n", "<leader>uc", function() Util.toggle("conceallevel", false, { 0, concea
     { desc = "Toggle Conceal" })
 
 -- easy compile
-local compile = function()
-    local substr = vim.api.nvim_eval("&filetype")
-    
-    if substr == "c" then
-        vim.cmd("!gcc % -o %<.out")
-        vim.cmd("!time ./%<.out")
-    elseif substr == "cpp" then
-        vim.cmd("!g++ % -o %<.out")
-        vim.cmd("!time ./%<.out")
-    elseif substr == "lua" then
+local easy_compile = function()
+    local ft = vim.bo.filetype
+
+    if ft == "c" then
+        -- 'gcc -g' means debug support
+        vim.cmd("set splitbelow")
+        vim.cmd("sp")
+        vim.cmd("res -5")
+        vim.cmd("terminal gcc -g % -o %<.out && time ./%<.out && rm ./%<.out")
+    elseif ft == "cpp" then
+        vim.cmd("set splitbelow")
+        vim.cmd("sp")
+        vim.cmd("res -5")
+        vim.cmd("terminal g++ -g % -o %<.out && time ./%<.out && rm ./%<.out")
+    elseif ft == "lua" then
         vim.cmd("!lua %")
     end
 end
-map("n", "<leader>r", compile, { desc = "compile current file" })
+map("n", "<leader>r", easy_compile, {silent = true, desc = "compile current file" })
 
 map("n", "<leader>h","<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile"})
 map("n", "<leader>cc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "rename word under current cursor"})
