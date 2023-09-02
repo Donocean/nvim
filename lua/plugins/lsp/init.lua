@@ -64,9 +64,9 @@ return {
             -- return true if you don't want this server to be setup with lspconfig
             ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
             setup = {
-                -- example to setup with typescript.nvim
-                -- tsserver = function(_, opts)
-                --   require("typescript").setup({ server = opts })
+                -- example to setup with clangd.nvim
+                -- clangd = function(_, opts)
+                --   require("clangd").setup({ server = opts })
                 --   return true
                 -- end,
                 -- Specify * to use this function as a fallback for any server
@@ -77,10 +77,9 @@ return {
         config = function(_, opts)
             local Util = require("util")
             -- setup autoformat
-            require("plugins.lsp.format").autoformat = opts.autoformat
+            require("plugins.lsp.keymaps").autoformat = opts.autoformat
             -- setup formatting and keymaps
             Util.on_attach(function(client, buffer)
-                require("plugins.lsp.format").on_attach(client, buffer)
                 require("plugins.lsp.keymaps").on_attach(client, buffer)
             end)
 
@@ -206,31 +205,35 @@ return {
                 local clangd_path = c_lsp .. "/bin/clangd"
                 local target_path = vim.fn.stdpath("data") .. "/mason/bin/clangd"
                 vim.fn.system({ "chmod", "u+x", clangd_path, })
-                vim.fn.system({ "ln", "-s", clangd_path, target_path, })
+                os.execute("ln -s " .. clangd_path .. " " .. target_path)
             end
         end,
     },
 
     -- formatters
     {
-        "jose-elias-alvarez/null-ls.nvim",
+        "nvimdev/guard.nvim",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = { "mason.nvim" },
-        opts = function()
-            local nls = require("null-ls")
+        opts = {
+            -- the only options for the setup function
+            fmt_on_save = false,
+            -- Use lsp if no formatter was defined for this filetype
+            lsp_as_default_formatter = true,
+        },
+        config = function(_, opts)
+            local ft = require("guard.filetype")
             -- Specify clang-format file
             local cfg_path = vim.fn.stdpath("config") .. "/lua/plugins/lsp/.clang-format"
 
-            return {
-                root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-                sources = {
-                    nls.builtins.formatting.stylua,
-                    nls.builtins.formatting.shfmt,
-                    nls.builtins.formatting.clang_format.with({
-                        extra_args = {"--style=file:" .. cfg_path},
-                    }),
-                },
-            }
+            ft("c,cpp"):fmt({
+                cmd = "clang-format",
+                stdin = true,
+                args = { "--style=file:" .. cfg_path },
+            })
+
+            -- call setup at last
+            require("guard").setup(opts)
         end,
     },
 }

@@ -109,7 +109,7 @@ map("n", "<leader>gg", function() Util.float_term({ "lazygit" }, { cwd = Util.ge
 map("n", "<leader>gG", function() Util.float_term({ "lazygit" }, { esc_esc = false }) end, { desc = "Lazygit (cwd)" })
 
 -- toggle options
-map("n", "<leader>uf", require("plugins.lsp.format").toggle, { desc = "Toggle format on Save" })
+map("n", "<leader>uf", require("plugins.lsp.keymaps").togglefmt, { desc = "Toggle format on Save" })
 map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
 map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
 map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
@@ -141,7 +141,3 @@ map("n", "<leader>r", easy_compile, {silent = true, desc = "compile current file
 map("n", "<leader>h","<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile"})
 map("n", "<leader>cc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "rename word under current cursor"})
 
-map('n', '<leader>\\', function()
-    local builtin = require('telescope.builtin')
-	builtin.grep_string({ search = vim.fn.input("Grep > ") })
-end, { desc = "grep string(/) in the current file using telescope"})

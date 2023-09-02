@@ -79,15 +79,18 @@ return {
             { "<leader>/",       Util.telescope("live_grep"),                          desc = "Grep (root dir)" },
             { "<leader>:",       "<cmd>Telescope command_history<cr>",                 desc = "Command History" },
             { "<leader><space>", Util.telescope("files"),                              desc = "Find Files (root dir)" },
+
             -- find
             { "<leader>fb",      "<cmd>Telescope buffers<cr>",                         desc = "Buffers" },
             { "<leader>ff",      Util.telescope("files"),                              desc = "Find Files (root dir)" },
             { "<leader>fF",      Util.telescope("files", { cwd = false }),             desc = "Find Files (cwd)" },
             { "<leader>fr",      "<cmd>Telescope oldfiles<cr>",                        desc = "Recent" },
             { "<leader>fR",      Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
+
             -- git
             { "<leader>gc",      "<cmd>Telescope git_commits<CR>",                     desc = "commits" },
             { "<leader>gs",      "<cmd>Telescope git_status<CR>",                      desc = "status" },
+
             -- search
             { "<leader>sa",      "<cmd>Telescope autocommands<cr>",                    desc = "Auto Commands" },
             { "<leader>sb",      "<cmd>Telescope current_buffer_fuzzy_find<cr>",       desc = "Buffer" },
@@ -106,6 +109,12 @@ return {
             { "<leader>sR",      "<cmd>Telescope resume<cr>",                          desc = "Resume" },
             { "<leader>sw",      Util.telescope("grep_string"),                        desc = "Word (root dir)" },
             { "<leader>sW",      Util.telescope("grep_string", { cwd = false }),       desc = "Word (cwd)" },
+            { '<leader>\\', function()
+                require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+                    winblend = 10,
+                    previewer = false,
+                }))
+            end, desc = "[/] Fuzzily search in current buffer" },
             {
                 "<leader>uC",
                 Util.telescope("colorscheme", { enable_preview = true }),

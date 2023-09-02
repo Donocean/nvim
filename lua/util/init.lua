@@ -73,9 +73,11 @@ function M.get_root()
       end
     end
   end
+
   table.sort(roots, function(a, b)
     return #a > #b
   end)
+
   ---@type string?
   local root = roots[1]
   if not root then

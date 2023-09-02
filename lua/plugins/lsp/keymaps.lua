@@ -4,14 +4,10 @@ M._keys = nil
 
 ---@return (LazyKeys|{has?:string})[]
 function M.get()
-  local format = function()
-    require("plugins.lsp.format").format({ force = true })
-  end
-
   if not M._keys then
   ---@class PluginLspKeys
     -- stylua: ignore
-    M._keys =  {
+    M._keys = {
       { "<leader>cd", vim.diagnostic.open_float, desc = "Line Diagnostics" },
       { "<leader>cl", "<cmd>LspInfo<cr>", desc = "Lsp Info" },
       { "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definition", has = "definition" },
@@ -28,39 +24,12 @@ function M.get()
       { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev Error" },
       { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next Warning" },
       { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
-      { "<leader>cf", format, desc = "Format Document", has = "documentFormatting" },
-      { "<leader>cf", format, desc = "Format Range", mode = "v" },
-      { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, has = "codeAction" },
-      {
-        "<leader>cA",
-        function()
-          vim.lsp.buf.code_action({
-            context = {
-              only = {
-                "source",
-              },
-              diagnostics = {},
-            },
-          })
-        end,
-        desc = "Source Action",
-        has = "codeAction",
-      }
+      { "<leader>cf","<cmd>GuardFmt<cr>", desc = "Format File/Range", mode = {"n", "v"}},
+      { "<leader>ca", "<cmd>Lspsaga code_action<cr>", desc = "Code Action", has = "codeAction" },
+      { "<leader>cr", "<cmd>:Lspsaga rename<cr>", desc = "Rename", has = "rename" },
+      { "<leader>k", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek Definition"},
+      { "<leader>o", "<cmd>Lspsaga outline<cr>", desc = "Outline"},
     }
-    if require("util").has("inc-rename.nvim") then
-      M._keys[#M._keys + 1] = {
-        "<leader>cr",
-        function()
-          local inc_rename = require("inc_rename")
-          return ":" .. inc_rename.config.cmd_name .. " " .. vim.fn.expand("<cword>")
-        end,
-        expr = true,
-        desc = "Rename",
-        has = "rename",
-      }
-    else
-      M._keys[#M._keys + 1] = { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" }
-    end
   end
   return M._keys
 end
@@ -96,6 +65,27 @@ function M.diagnostic_goto(next, severity)
   return function()
     go({ severity = severity })
   end
+end
+
+M.autoformat = true
+function M.togglefmt()
+    local Util = require("lazy.core.util")
+
+    if vim.b.autoformat == false then
+        vim.b.autoformat = nil
+        M.autoformat = true
+    else
+        M.autoformat = not M.autoformat
+    end
+
+    if M.autoformat then
+        vim.cmd("GuardEnable")
+        vim.cmd("GuardFmt")
+        Util.info("Enabled format on save")
+    else
+        vim.cmd("GuardDisable")
+        Util.warn("Disabled format on save")
+    end
 end
 
 return M
