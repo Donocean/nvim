@@ -144,10 +144,7 @@ return {
         event = "VeryLazy",
         opts = {
             easing_function = "sine",
-            post_hook = function()
-                vim.api.nvim_input("zz")
-            end,
-            mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', 'zz'},
+            mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>'},
         },
         config = function(_, opts)
             require('neoscroll').setup(opts)
