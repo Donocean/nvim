@@ -54,6 +54,14 @@ return {
                     expander_highlight = "NeoTreeExpander",
                 },
             },
+            git_status = {
+                symbols = {
+                    -- Change type
+                    added     = require("config.icons").icons.git.added,
+                    modified  = require("config.icons").icons.git.modified,
+                    deleted   = require("config.icons").icons.git.removed,
+                }
+            },
         },
         config = function(_, opts)
             require("neo-tree").setup(opts)

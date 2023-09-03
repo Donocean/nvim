@@ -22,10 +22,10 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -- greatest remap ever
-map("x", "<leader>p", "\"_dP", {desc = "paste without missing object"})
+map("x", "<leader>p", "\"_dP", { desc = "paste without missing object" })
 
 -- better paste
-map("i", "<c-v>", "<c-r>+", {desc = "paste in the insert mode"})
+map("i", "<c-v>", "<c-r>+", { desc = "paste in the insert mode" })
 
 -- better up/down when use wrap
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -37,11 +37,10 @@ map("n", "<C-Down>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
 map("n", "<C-Left>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
 map("n", "<C-Right>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
 
-map("n", "<leader><cr>", "<cmd>nohlsearch<cr>", { desc = "Clear hlsearch" })
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
-map({"n", "v"}, "0", "^", { desc = "Start of the line" })
-map({"n", "v"}, ")", "$", { desc = "End of the line" })
+map({ "n", "v" }, "0", "^", { desc = "Start of the line" })
+map({ "n", "v" }, ")", "$", { desc = "End of the line" })
 
 -- save file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
@@ -109,7 +108,7 @@ map("n", "<leader>gg", function() Util.float_term({ "lazygit" }, { cwd = Util.ge
 map("n", "<leader>gG", function() Util.float_term({ "lazygit" }, { esc_esc = false }) end, { desc = "Lazygit (cwd)" })
 
 -- toggle options
-map("n", "<leader>uf", require("plugins.lsp.keymaps").togglefmt, { desc = "Toggle format on Save" })
+map("n", "<leader>uf", Util.toggle_format, { desc = "Toggle format on Save" })
 map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
 map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
 map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
@@ -136,8 +135,8 @@ local easy_compile = function()
         vim.cmd("!lua %")
     end
 end
-map("n", "<leader>r", easy_compile, {silent = true, desc = "compile current file" })
+map("n", "<leader>r", easy_compile, { silent = true, desc = "compile current file" })
 
-map("n", "<leader>h","<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile"})
-map("n", "<leader>cc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = "rename word under current cursor"})
-
+map("n", "<leader>h", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile" })
+map("n", "<leader>cc", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+    { desc = "rename word under current cursor" })

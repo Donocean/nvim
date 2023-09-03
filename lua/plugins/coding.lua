@@ -136,5 +136,31 @@ return {
     {
         "tpope/vim-repeat",
         event = "VeryLazy"
-    }
+    },
+
+    -- smooth scrolling
+    {
+        "karb94/neoscroll.nvim",
+        event = "VeryLazy",
+        opts = {
+            easing_function = "sine",
+            post_hook = function()
+                vim.api.nvim_input("zz")
+            end,
+            mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', 'zz'},
+        },
+        config = function(_, opts)
+            require('neoscroll').setup(opts)
+        end,
+    },
+
+    -- auto remove highlight serach
+    {
+        "asiryk/auto-hlsearch.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("auto-hlsearch").setup()
+        end
+    },
+
 }

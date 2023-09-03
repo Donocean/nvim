@@ -27,26 +27,6 @@ function M.fg(name)
   return fg and { fg = string.format("#%06x", fg) }
 end
 
----@param fn fun()
-function M.on_very_lazy(fn)
-  vim.api.nvim_create_autocmd("User", {
-    pattern = "VeryLazy",
-    callback = function()
-      fn()
-    end,
-  })
-end
-
----@param name string
-function M.opts(name)
-  local plugin = require("lazy.core.config").plugins[name]
-  if not plugin then
-    return {}
-  end
-  local Plugin = require("lazy.core.plugin")
-  return Plugin.values(plugin, "opts", false)
-end
-
 -- returns the root directory based on:
 -- * lsp workspace folders
 -- * lsp root_dir
@@ -159,6 +139,27 @@ function M.toggle(option, silent, values)
   end
 end
 
+M.autoformat = true
+function M.toggle_format()
+    local Util = require("lazy.core.util")
+
+    if vim.b.autoformat == false then
+        vim.b.autoformat = nil
+        M.autoformat = true
+    else
+        M.autoformat = not M.autoformat
+    end
+
+    if M.autoformat then
+        vim.cmd("GuardEnable")
+        vim.cmd("GuardFmt")
+        Util.info("Enabled format on save")
+    else
+        vim.cmd("GuardDisable")
+        Util.warn("Disabled format on save")
+    end
+end
+
 local enabled = false
 function M.toggle_diagnostics()
   enabled = not enabled
@@ -169,64 +170,6 @@ function M.toggle_diagnostics()
     vim.diagnostic.disable()
     Util.warn("Disabled diagnostics")
   end
-end
-
-function M.deprecate(old, new)
-  Util.warn(("`%s` is deprecated. Please use `%s` instead"):format(old, new), { title = "LazyVim" })
-end
-
--- delay notifications till vim.notify was replaced or after 500ms
-function M.lazy_notify()
-  local notifs = {}
-  local function temp(...)
-    table.insert(notifs, vim.F.pack_len(...))
-  end
-
-  local orig = vim.notify
-  vim.notify = temp
-
-  local timer = vim.loop.new_timer()
-  local check = vim.loop.new_check()
-
-  local replay = function()
-    timer:stop()
-    check:stop()
-    if vim.notify == temp then
-      vim.notify = orig -- put back the original notify if needed
-    end
-    vim.schedule(function()
-      ---@diagnostic disable-next-line: no-unknown
-      for _, notif in ipairs(notifs) do
-        vim.notify(vim.F.unpack_len(notif))
-      end
-    end)
-  end
-
-  -- wait till vim.notify has been replaced
-  check:start(function()
-    if vim.notify ~= temp then
-      replay()
-    end
-  end)
-  -- or if it took more than 500ms, then something went wrong
-  timer:start(500, 0, replay)
-end
-
-function M.lsp_get_config(server)
-  local configs = require("lspconfig.configs")
-  return rawget(configs, server)
-end
-
----@param server string
----@param cond fun( root_dir, config): boolean
-function M.lsp_disable(server, cond)
-  local util = require("lspconfig.util")
-  local def = M.lsp_get_config(server)
-  def.document_config.on_new_config = util.add_hook_before(def.document_config.on_new_config, function(config, root_dir)
-    if cond(root_dir, config) then
-      config.enabled = false
-    end
-  end)
 end
 
 return M

@@ -18,6 +18,7 @@ require("lazy").setup({
         require("plugins.editor"),
         require("plugins.lsp"),
         require("plugins.treesitter"),
+        require("plugins.flash"),
         -- require("plugins.markdown"),
     },
     {

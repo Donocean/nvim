@@ -77,7 +77,7 @@ return {
         config = function(_, opts)
             local Util = require("util")
             -- setup autoformat
-            require("plugins.lsp.keymaps").autoformat = opts.autoformat
+            require("util").autoformat = opts.autoformat
             -- setup formatting and keymaps
             Util.on_attach(function(client, buffer)
                 require("plugins.lsp.keymaps").on_attach(client, buffer)
@@ -171,6 +171,8 @@ return {
             ensure_installed = {
                 "stylua",
                 "shfmt",
+                "clang-format",
+                "cmake-language-server",
             },
         },
         ---@param opts MasonSettings | {ensure_installed: string[]}
@@ -230,6 +232,15 @@ return {
                 cmd = "clang-format",
                 stdin = true,
                 args = { "--style=file:" .. cfg_path },
+            })
+            ft("stylua"):fmt({
+                cmd = 'stylua',
+                args = { '-' },
+                stdin = true,
+            })
+            ft("styfmt"):fmt({
+                cmd = 'shfmt',
+                stdin = true,
             })
 
             -- call setup at last

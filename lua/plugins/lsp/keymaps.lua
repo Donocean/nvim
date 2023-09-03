@@ -24,7 +24,8 @@ function M.get()
       { "[e", M.diagnostic_goto(false, "ERROR"), desc = "Prev Error" },
       { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next Warning" },
       { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
-      { "<leader>cf","<cmd>GuardFmt<cr>", desc = "Format File/Range", mode = {"n", "v"}},
+      { "<leader>cf","<cmd>GuardFmt<cr>", desc = "Format File"},
+      { "f","=<cmd>GuardFmt<cr>", desc = "Format Range", mode = "v"},
       { "<leader>ca", "<cmd>Lspsaga code_action<cr>", desc = "Code Action", has = "codeAction" },
       { "<leader>cr", "<cmd>:Lspsaga rename<cr>", desc = "Rename", has = "rename" },
       { "<leader>k", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek Definition"},
@@ -65,27 +66,6 @@ function M.diagnostic_goto(next, severity)
   return function()
     go({ severity = severity })
   end
-end
-
-M.autoformat = true
-function M.togglefmt()
-    local Util = require("lazy.core.util")
-
-    if vim.b.autoformat == false then
-        vim.b.autoformat = nil
-        M.autoformat = true
-    else
-        M.autoformat = not M.autoformat
-    end
-
-    if M.autoformat then
-        vim.cmd("GuardEnable")
-        vim.cmd("GuardFmt")
-        Util.info("Enabled format on save")
-    else
-        vim.cmd("GuardDisable")
-        Util.warn("Disabled format on save")
-    end
 end
 
 return M
