@@ -26,7 +26,7 @@ they are primarily separate into five parts
 
 ## Editor 
 
-- neo-tree.nvim: file explorer
+- nvim-tree.nvim: file explorer
 - telescope.nvim: fuzzy finder
 - which-key.nvim: key prompt
 - vim-illuminate: hightlight same symbols

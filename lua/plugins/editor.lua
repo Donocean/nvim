@@ -3,76 +3,101 @@ local Util = require("util")
 return {
 
     -- file explorer
-    { "MunifTanjim/nui.nvim", lazy = true }, -- dependencies
     {
-        "nvim-neo-tree/neo-tree.nvim",
-        cmd = "Neotree",
-        keys = {
-            {
-                "<leader>e", -- because i map so many <ctrl> key which makes my little finger poor
-                function()
-                    require("neo-tree.command").execute({ toggle = true, dir = require("util").get_root() })
-                end,
-                desc = "Explorer NeoTree (root dir)",
-            },
-            {
-                "<leader>E",
-                function()
-                    require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-                end,
-                desc = "Explorer NeoTree (cwd)",
-            },
-        },
-        deactivate = function()
-            vim.cmd([[Neotree close]])
-        end,
-        init = function()
-            vim.g.neo_tree_remove_legacy_commands = 1
-            if vim.fn.argc() == 1 then
-                local stat = vim.loop.fs_stat(vim.fn.argv(0))
-                if stat and stat.type == "directory" then
-                    require("neo-tree")
-                end
-            end
-        end,
+        "nvim-tree/nvim-tree.lua",
+        keys = { {
+            "<leader>e",
+            "<cmd>NvimTreeToggle<cr><cmd>IlluminatePauseBuf<cr>",
+            silent = true,
+            desc = "Explorer NeoTree"
+        } },
         opts = {
-            filesystem = {
-                bind_to_cwd = false,
-                follow_current_file = true,
-                use_libuv_file_watcher = true,
+            sort_by = "case_sensitive",
+            hijack_cursor = true,
+            view = {
+                width = 25,
             },
-            window = {
-                mappings = {
-                    ["<space>"] = { "open", nowait = true },
+            renderer = {
+                group_empty = true,
+                highlight_git = true,
+                icons = {
+                    glyphs = {
+                        git = {
+                            unstaged = '',
+                            staged = '',
+                            unmerged = '',
+                            renamed = '',
+                            deleted = '',
+                            untracked = '',
+                            ignored = '',
+                        },
+                        folder = {
+                            default = '',
+                            open = '',
+                            symlink = '',
+                        },
+                    },
+                    show = {
+                        git = false,
+                        file = true,
+                        folder = true,
+                        folder_arrow = false,
+                    },
                 },
             },
-            default_component_configs = {
-                indent = {
-                    with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-                    expander_collapsed = "",
-                    expander_expanded = "",
-                    expander_highlight = "NeoTreeExpander",
-                },
+            filters = {
+                dotfiles = true,
             },
-            git_status = {
-                symbols = {
-                    -- Change type
-                    added     = require("config.icons").icons.git.added,
-                    modified  = require("config.icons").icons.git.modified,
-                    deleted   = require("config.icons").icons.git.removed,
-                }
-            },
+            on_attach = function(bufnr)
+                local api = require("nvim-tree.api")
+
+                local function opts(desc)
+                    return {
+                        desc = "nvim-tree: " .. desc,
+                        buffer = bufnr,
+                        noremap = true,
+                        silent = true,
+                        nowait = true
+                    }
+                end
+
+                -- file operation
+                vim.keymap.set('n', '<leader>', api.node.open.edit, opts('Open'))
+                vim.keymap.set('n', '<cr>', api.node.open.edit, opts('Open'))
+                vim.keymap.set('n', '<bs>', api.node.navigate.parent_close, opts('Close Directory'))
+                vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
+                vim.keymap.set('n', 'a', api.fs.create, opts('Create'))
+                vim.keymap.set('n', 'd', api.fs.remove, opts('Delete'))
+                vim.keymap.set('n', 'r', api.fs.rename, opts('Rename'))
+                vim.keymap.set('n', 'c', api.fs.copy.node, opts('Copy'))
+                vim.keymap.set('n', 'p', api.fs.paste, opts('Paste'))
+                -- items
+                vim.keymap.set('n', 'f', api.live_filter.start, opts('Filter'))
+                vim.keymap.set('n', 'F', api.live_filter.clear, opts('Clean Filter'))
+                vim.keymap.set('n', 'e', api.tree.expand_all, opts('Expand All'))
+                vim.keymap.set('n', 'w', api.tree.collapse_all, opts('Collapse'))
+                vim.keymap.set('n', 'H', api.tree.toggle_hidden_filter, opts('Toggle Filter: Dotfiles'))
+                -- modfied file in git
+                vim.keymap.set('n', '[c', api.node.navigate.git.prev, opts('Prev Git'))
+                vim.keymap.set('n', ']c', api.node.navigate.git.next, opts('Next Git'))
+                -- opne with tab/split
+                vim.keymap.set('n', '<tab>', api.node.open.tab, opts('Open: New Tab'))
+                vim.keymap.set('n', '<C-s>', api.node.open.vertical, opts('Open: Vertical Split'))
+                vim.keymap.set('n', '<C-x>', api.node.open.horizontal, opts('Open: Horizontal Split'))
+                -- copy path
+                vim.keymap.set('n', 'y', api.fs.copy.relative_path, opts('Copy Relative Path'))
+                vim.keymap.set('n', 'Y', api.fs.copy.absolute_path, opts('Copy Absolute Path'))
+                -- help
+                vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+            end
         },
         config = function(_, opts)
-            require("neo-tree").setup(opts)
-            vim.api.nvim_create_autocmd("TermClose", {
-                pattern = "*lazygit",
-                callback = function()
-                    if package.loaded["neo-tree.sources.git_status"] then
-                        require("neo-tree.sources.git_status").refresh()
-                    end
-                end,
-            })
+            -- disable netrw at the very start of your init.lua
+            vim.g.loaded_netrw = 1
+            vim.g.loaded_netrwPlugin = 1
+            -- set termguicolors to enable highlight groups
+            vim.opt.termguicolors = true
+            require('nvim-tree').setup(opts)
         end,
     },
 
@@ -117,12 +142,16 @@ return {
             { "<leader>sR",      "<cmd>Telescope resume<cr>",                          desc = "Resume" },
             { "<leader>sw",      Util.telescope("grep_string"),                        desc = "Word (root dir)" },
             { "<leader>sW",      Util.telescope("grep_string", { cwd = false }),       desc = "Word (cwd)" },
-            { '<leader>\\', function()
-                require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-                    winblend = 10,
-                    previewer = false,
-                }))
-            end, desc = "[/] Fuzzily search in current buffer" },
+            {
+                '<leader>\\',
+                function()
+                    require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
+                        winblend = 10,
+                        previewer = false,
+                    }))
+                end,
+                desc = "Fuzzily search in current buffer"
+            },
             {
                 "<leader>uC",
                 Util.telescope("colorscheme", { enable_preview = true }),
@@ -194,7 +223,7 @@ return {
                             return require("telescope.actions").cycle_history_prev(...)
                         end,
                         ["<C-f>"] = function(...)
-                           return require("telescope.actions").preview_scrolling_down(...)
+                            return require("telescope.actions").preview_scrolling_down(...)
                         end,
                         ["<C-b>"] = function(...)
                             return require("telescope.actions").preview_scrolling_up(...)
