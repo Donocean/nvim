@@ -68,6 +68,7 @@ return {
                 vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
                 vim.keymap.set('n', 'a', api.fs.create, opts('Create'))
                 vim.keymap.set('n', 'd', api.fs.remove, opts('Delete'))
+                vim.keymap.set('n', 'x', api.fs.cut, opts('Cut'))
                 vim.keymap.set('n', 'r', api.fs.rename, opts('Rename'))
                 vim.keymap.set('n', 'c', api.fs.copy.node, opts('Copy'))
                 vim.keymap.set('n', 'p', api.fs.paste, opts('Paste'))
@@ -76,6 +77,7 @@ return {
                 vim.keymap.set('n', 'F', api.live_filter.clear, opts('Clean Filter'))
                 vim.keymap.set('n', 'e', api.tree.expand_all, opts('Expand All'))
                 vim.keymap.set('n', 'w', api.tree.collapse_all, opts('Collapse'))
+                vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node, opts('CD'))
                 vim.keymap.set('n', 'H', api.tree.toggle_hidden_filter, opts('Toggle Filter: Dotfiles'))
                 -- modfied file in git
                 vim.keymap.set('n', '[c', api.node.navigate.git.prev, opts('Prev Git'))
@@ -300,16 +302,6 @@ return {
         keys = {
             { "]r", desc = "Next Reference" },
             { "[r", desc = "Prev Reference" },
-        },
-    },
-
-    -- buffer remove
-    {
-        "echasnovski/mini.bufremove",
-        -- stylua: ignore
-        keys = {
-            { "<leader>bd", function() require("mini.bufremove").delete(0, false) end, desc = "Delete Buffer" },
-            { "<leader>bD", function() require("mini.bufremove").delete(0, true) end,  desc = "Delete Buffer (Force)" },
         },
     },
 

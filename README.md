@@ -4,7 +4,7 @@
 
 # Plugins
 
-All my plugins was in the `lua/plugins` 
+All my plugins was in the `lua/plugins`
 
 they are primarily separate into five parts
 
