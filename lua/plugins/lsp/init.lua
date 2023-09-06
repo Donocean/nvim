@@ -211,7 +211,7 @@ return {
         -- formatters
         {
             "nvimdev/guard.nvim",
-            event = { "BufReadPre", "BufNewFile" },
+            event = "VeryLazy",
             dependencies = { "mason.nvim" },
             opts = {
                 -- the only options for the setup function
