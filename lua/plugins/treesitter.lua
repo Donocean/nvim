@@ -27,6 +27,8 @@ return {
                 "cmake",
                 "vim",
                 "vimdoc",
+                "python",
+                "matlab",
             },
             incremental_selection = {
                 enable = true,
