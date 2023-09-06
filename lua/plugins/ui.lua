@@ -71,15 +71,12 @@ return {
         "akinsho/bufferline.nvim",
         event = "VeryLazy",
         keys = {
-            { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>",            desc = "Toggle pin" },
-            { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
+            { "<leader>bp", "<cmd>BufferLineTogglePin<cr>",            desc = "Toggle pin" },
+            { "<leader>bP", "<cmd>BufferLineGroupClose ungrouped<cr>", desc = "Close non-pinned buffers" },
+            { "<leader>bo", "<cmd>BufferLineCloseOthers<cr>",          desc = "Close all buffer but this" }
         },
         opts = {
             options = {
-                -- stylua: ignore
-                close_command = function(n) require("mini.bufremove").delete(n, false) end,
-                -- stylua: ignore
-                right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
                 always_show_bufferline = false,
                 -- diagnostics = "nvim_lsp",
                 -- diagnostics_indicator = function(_, _, diag)

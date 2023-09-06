@@ -172,16 +172,4 @@ function M.toggle_diagnostics()
   end
 end
 
--- buf delete
-function M.close_all_but_this()
-    local current_bufnr = vim.fn.bufnr("%")
-    local buf_list = vim.fn.getbufinfo({buflisted = 1})
-    
-    for _, buf in ipairs(buf_list) do
-        if buf.bufnr ~= current_bufnr then
-            vim.cmd("bd" .. buf.bufnr)
-        end
-    end
-end
-
 return M
