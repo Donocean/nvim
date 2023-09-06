@@ -110,12 +110,13 @@ return {
             end
 
             local servers = opts.servers
+            local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
             local capabilities = vim.tbl_deep_extend(
-                "force",
-                {},
-                vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities(),
-                opts.capabilities or {}
+            "force",
+            {},
+            vim.lsp.protocol.make_client_capabilities(),
+            has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+            opts.capabilities or {}
             )
 
             local function setup(server)
@@ -233,15 +234,8 @@ return {
                 stdin = true,
                 args = { "--style=file:" .. cfg_path },
             })
-            ft("stylua"):fmt({
-                cmd = 'stylua',
-                args = { '-' },
-                stdin = true,
-            })
-            ft("styfmt"):fmt({
-                cmd = 'shfmt',
-                stdin = true,
-            })
+            ft("stylua"):fmt("stylua")
+            ft("sh"):fmt("shfmt")
 
             -- call setup at last
             require("guard").setup(opts)

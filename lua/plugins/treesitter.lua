@@ -8,16 +8,16 @@ return {
                 "nvim-treesitter/nvim-treesitter-textobjects",
         },
         keys = {
-            { "<c-space>", desc = "Increment selection" },
+            { "<cr>", desc = "Increment selection" },
             { "<bs>", desc = "Decrement selection", mode = "x" },
         },
         ---@type TSConfig
         opts = {
             highlight = { enable = true },
             ensure_installed = {
-                "bash",
                 "c",
                 "cpp",
+                "doxygen",
                 "lua",
                 "luadoc",
                 "luap",
@@ -31,8 +31,8 @@ return {
             incremental_selection = {
                 enable = true,
                 keymaps = {
-                    init_selection = "<C-space>",
-                    node_incremental = "<C-space>",
+                    init_selection = "<cr>",
+                    node_incremental = "<cr>",
                     scope_incremental = false,
                     node_decremental = "<bs>",
                 },

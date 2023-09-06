@@ -126,12 +126,6 @@ return {
         keys = { "<c-n>" },
     },
 
-    -- wildfire
-    {
-        "gcmt/wildfire.vim",
-        keys = { "<cr>" },
-    },
-
     -- enhance dot(.)
     {
         "tpope/vim-repeat",
