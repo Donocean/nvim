@@ -63,13 +63,9 @@ map("n", "<c-k>", "<c-w>k", { desc = "swith to the upper window" })
 if Util.has("bufferline.nvim") then
     map("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
     map("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
-    map("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
-    map("n", "]b", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
 else
     map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
     map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
-    map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })
-    map("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 end
 map("n", "<leader>bb", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
@@ -87,6 +83,10 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result
 -- better indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+
+-- navigate brace
+map("n", "[`", "?{<cr>:nohl<cr>", {desc = "jump to Prev {"})
+map("n", "]`", "/}<cr>:nohl<cr>", {desc = "jump to Prev }"})
 
 -- lazy
 map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })

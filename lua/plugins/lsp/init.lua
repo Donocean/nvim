@@ -104,14 +104,13 @@ return {
                     vim.diagnostic.disable()
                 end
 
-                -- config cmp_lsp
                 local servers = opts.servers
-                local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+                -- set up cmp-lsp
                 local capabilities = vim.tbl_deep_extend(
                 "force",
                 {},
                 vim.lsp.protocol.make_client_capabilities(),
-                has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+                require("cmp_nvim_lsp").default_capabilities(),
                 opts.capabilities or {}
                 )
 
