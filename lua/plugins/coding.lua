@@ -132,19 +132,6 @@ return {
         event = "VeryLazy"
     },
 
-    -- smooth scrolling
-    {
-        "karb94/neoscroll.nvim",
-        event = "VeryLazy",
-        opts = {
-            easing_function = "sine",
-            mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>'},
-        },
-        config = function(_, opts)
-            require('neoscroll').setup(opts)
-        end,
-    },
-
     -- auto remove highlight serach
     {
         "asiryk/auto-hlsearch.nvim",

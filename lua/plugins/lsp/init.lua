@@ -26,10 +26,6 @@ return {
             },
             -- add any global capabilities here
             capabilities = {},
-            -- Automatically format on save
-            autoformat = false,
-            -- disable diagnostics
-            diagnostics_enabled = false,
 
             -- options for vim.lsp.buf.format
             -- `bufnr` and `filter` is handled by the LazyVim formatter,
@@ -71,9 +67,7 @@ return {
             ---@param opts PluginLspOpts
             config = function(_, opts)
                 local Util = require("util")
-                -- setup autoformat
-                require("util").autoformat = opts.autoformat
-                -- setup formatting and keymaps
+                -- setup keymaps
                 Util.on_attach(function(client, buffer)
                     require("plugins.lsp.keymaps").on_attach(client, buffer)
                 end)
@@ -98,7 +92,7 @@ return {
 
                 vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-                if opts.diagnostics_enabled then
+                if Util.diagnostics_enabled then
                     vim.diagnostic.enable()
                 else
                     vim.diagnostic.disable()
@@ -223,6 +217,10 @@ return {
                 local ft = require("guard.filetype")
                 -- Specify clang-format file
                 local cfg_path = vim.fn.stdpath("config") .. "/lua/plugins/lsp/.clang-format"
+
+                if require("util").autoformat then
+                    vim.cmd("GuardEnable")
+                end
 
                 ft("c,cpp"):fmt({
                     cmd = "clang-format",

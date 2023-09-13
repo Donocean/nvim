@@ -160,10 +160,10 @@ function M.toggle_format()
     end
 end
 
-local enabled = false
+local diagnostics_enabled = false
 function M.toggle_diagnostics()
-  enabled = not enabled
-  if enabled then
+  diagnostics_enabled = not diagnostics_enabled
+  if diagnostics_enabled then
     vim.diagnostic.enable()
     Util.info("Enabled diagnostics")
   else
