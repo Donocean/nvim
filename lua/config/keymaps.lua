@@ -21,6 +21,9 @@ local function map(mode, lhs, rhs, opts)
 	end
 end
 
+-- open init.lua
+map("n", "<leader>n", ":e $MYVIMRC<cr>", { desc = "Config Nvim" })
+
 -- greatest remap ever
 map("x", "<leader>p", '"_dP', { desc = "paste without missing object" })
 
@@ -40,8 +43,8 @@ map("n", "{", "{zz")
 -- Resize window using <ctrl>+<arrow> keys
 map("n", "<C-Up>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
 map("n", "<C-Down>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
-map("n", "<C-Left>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
-map("n", "<C-Right>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
+map("n", "<C-[>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
+map("n", "<C-]>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 

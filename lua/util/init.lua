@@ -139,7 +139,7 @@ function M.toggle(option, silent, values)
   end
 end
 
-M.autoformat = true
+M.autoformat = false
 function M.toggle_format()
     local Util = require("lazy.core.util")
 
