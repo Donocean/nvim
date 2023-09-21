@@ -21,7 +21,6 @@ they are primarily separate into five parts
 - vim-surround: surround
 - DoxygenToolkit.vim: Doxygen generator
 - vim-visual-multi: multi cursor
-- wildfire: press <cr> to choose a region rapidly
 - vim-repeat: enhance dot(.)
 
 ## Editor 
@@ -32,6 +31,7 @@ they are primarily separate into five parts
 - vim-illuminate: hightlight same symbols
 - mini.bufremove: buffer remove
 - gitsigns.nvim: git signs
+- folke/flash.nvim: the best navigating plugin I have ever seen.
 
 ## UI
 
@@ -39,13 +39,12 @@ they are primarily separate into five parts
 - lualine.nvim: statusline
 - indent-blankline.nvim: indent guides for Neovim
 - mini.indentscope: active indent guide and indent text objects
-- alpha-nvim: dashboard
-- nvim-navic: lsp symbol navigation for lualine
 - nvim-web-devicons: icons
 
 ## LSP
 
 - nvim-lspconfig: lspconfig
+- nvimdev/lspsaga.nvim: fancy lsp extension
 - mason.nvim: cmdline tools and lsp servers
 - mason-lspconfig.nvim
 
@@ -54,7 +53,7 @@ they are primarily separate into five parts
 - gruvbox
 - everforest
 
-## Others 
+## Others
 
 - nvim-treesitter: perfect language hightlight
 - markdown-preview.nvim: markdown-preview
