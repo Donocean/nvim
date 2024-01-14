@@ -12,13 +12,13 @@ local Util = require("util")
 -- cmap Command-line
 -- tmap Terminal
 local function map(mode, lhs, rhs, opts)
-	local keys = require("lazy.core.handler").handlers.keys
-	-- do not create the keymap if a lazy keys handler exists
-	if not keys.active[keys.parse({ lhs, mode = mode }).id] then
-		opts = opts or {}
-		opts.silent = opts.silent ~= false
-		vim.keymap.set(mode, lhs, rhs, opts)
-	end
+    local keys = require("lazy.core.handler").handlers.keys
+    -- do not create the keymap if a lazy keys handler exists
+    if not keys.active[keys.parse({ lhs, mode = mode }).id] then
+        opts = opts or {}
+        opts.silent = opts.silent ~= false
+        vim.keymap.set(mode, lhs, rhs, opts)
+    end
 end
 
 -- open init.lua
@@ -98,65 +98,65 @@ map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
 -- highlights under cursor
 if vim.fn.has("nvim-0.9.0") == 1 then
-	map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+    map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
 end
 
 -- floating terminal
 map("n", "<leader>w", function()
-	Util.float_term(nil, { cwd = Util.get_root() })
+    Util.float_term(nil, { cwd = Util.get_root() })
 end, { desc = "Terminal (root dir)" })
 map("n", "<leader>W", function()
-	Util.float_term()
+    Util.float_term()
 end, { desc = "Terminal (cwd)" })
 map("t", "<c-c>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
 
 -- lazygit
 map("n", "<leader>gg", function()
-	Util.float_term({ "lazygit" }, { cwd = Util.get_root(), esc_esc = false })
+    Util.float_term({ "lazygit" }, { cwd = Util.get_root(), esc_esc = false })
 end, { desc = "Lazygit (root dir)" })
 map("n", "<leader>gG", function()
-	Util.float_term({ "lazygit" }, { esc_esc = false })
+    Util.float_term({ "lazygit" }, { esc_esc = false })
 end, { desc = "Lazygit (cwd)" })
 
 -- toggle options
 map("n", "<leader>uf", Util.toggle_format, { desc = "Toggle format on Save" })
 map("n", "<leader>us", function()
-	Util.toggle("spell")
+    Util.toggle("spell")
 end, { desc = "Toggle Spelling" })
 map("n", "<leader>uw", function()
-	Util.toggle("wrap")
+    Util.toggle("wrap")
 end, { desc = "Toggle Word Wrap" })
 map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 map("n", "<leader>uc", function()
-	Util.toggle("conceallevel", false, { 0, conceallevel })
+    Util.toggle("conceallevel", false, { 0, conceallevel })
 end, { desc = "Toggle Conceal" })
 
 -- easy compile
 local easy_compile = function()
-	local ft = vim.bo.filetype
+    local ft = vim.bo.filetype
 
-	if ft == "c" then
-		-- 'gcc -g' means debug support
-		vim.cmd("set splitbelow")
-		vim.cmd("sp")
-		vim.cmd("res -5")
-		vim.cmd("terminal gcc -g % -o %<.out && time ./%<.out && rm ./%<.out")
-	elseif ft == "cpp" then
-		vim.cmd("set splitbelow")
-		vim.cmd("sp")
-		vim.cmd("res -5")
-		vim.cmd("terminal g++ -g % -o %<.out && time ./%<.out && rm ./%<.out")
-	elseif ft == "lua" then
-		vim.cmd("!lua %")
-	end
+    if ft == "c" then
+        -- 'gcc -g' means debug support
+        vim.cmd("set splitbelow")
+        vim.cmd("sp")
+        vim.cmd("res -5")
+        vim.cmd("terminal gcc -g % -o %<.out && time ./%<.out && rm ./%<.out")
+    elseif ft == "cpp" then
+        vim.cmd("set splitbelow")
+        vim.cmd("sp")
+        vim.cmd("res -5")
+        vim.cmd("terminal g++ -g % -o %<.out && time ./%<.out && rm ./%<.out")
+    elseif ft == "lua" then
+        vim.cmd("!lua %")
+    end
 end
 map("n", "<leader>r", easy_compile, { silent = true, desc = "compile current file" })
 
 map("n", "<leader>h", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile" })
 map(
-	"n",
-	"<leader>cc",
-	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "rename word under current cursor" }
+    "n",
+    "<leader>cc",
+    [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+    { desc = "rename word under current cursor" }
 )

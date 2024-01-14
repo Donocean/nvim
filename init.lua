@@ -1,4 +1,4 @@
--- first load options
+-- firstly load options
 require("config.options")
 
 -- load lazy.nvim

@@ -25,7 +25,7 @@ function M.get()
       { "]w", M.diagnostic_goto(true, "WARN"), desc = "Next Warning" },
       { "[w", M.diagnostic_goto(false, "WARN"), desc = "Prev Warning" },
       { "<leader>cf","<cmd>GuardFmt<cr>", desc = "Format File"},
-      { "f","=<cmd>GuardFmt<cr>", desc = "Format Range", mode = "v"},
+      { "+","=<cmd>GuardFmt<cr>", desc = "Format Range", mode = "v"},
       { "<leader>ca", "<cmd>Lspsaga code_action<cr>", desc = "Code Action", has = "codeAction" },
       { "<leader>cr", "<cmd>:Lspsaga rename<cr>", desc = "Rename", has = "rename" },
       { "<leader>k", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek Definition"},
