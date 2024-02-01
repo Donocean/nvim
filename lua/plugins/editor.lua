@@ -117,8 +117,8 @@ return {
 
             -- find
             { "<leader>fb",      "<cmd>Telescope buffers<cr>",                         desc = "Buffers" },
-            { "<leader>ff",      Util.telescope("files"),                              desc = "Find Files (root dir)" },
-            { "<leader>fF",      Util.telescope("files", { cwd = false }),             desc = "Find Files (cwd)" },
+            { "<leader>ff",      Util.telescope("files"),                              desc = "Find Files (cwd)" },
+            { "<leader>fF",      Util.telescope("files", { cwd = false }),             desc = "Find Files (root dir)" },
             { "<leader>fr",      "<cmd>Telescope oldfiles<cr>",                        desc = "Recent" },
             { "<leader>fR",      Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
 
@@ -155,12 +155,12 @@ return {
                 desc = "Fuzzily search in current buffer"
             },
             {
-                "<leader>uC",
+                "<leader>ui",
                 Util.telescope("colorscheme", { enable_preview = true }),
                 desc = "Colorscheme with preview",
             },
             {
-                "<leader>ss",
+                "gs",
                 Util.telescope("lsp_document_symbols", {
                     symbols = {
                         "Class",
@@ -178,7 +178,7 @@ return {
                 desc = "Goto Symbol",
             },
             {
-                "<leader>sS",
+                "gS",
                 Util.telescope("lsp_dynamic_workspace_symbols", {
                     symbols = {
                         "Class",

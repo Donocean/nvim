@@ -109,7 +109,7 @@ return {
     -- surround
     {
         "tpope/vim-surround",
-        keys = { "cs", "ds", "ys", { "S", mode = { "v", "x" } }, },
+        event = "VeryLazy",
         config = function()
         end,
     },
@@ -121,9 +121,16 @@ return {
     },
 
     -- multi cursor
+    -- 1. select words with Ctrl-n
+    -- 2. create cursors vertically with Ctrl-Down/Ctrl-Up
+    -- 3. select one character at a time with Shift-Arrows
+    -- 4. press "n" or "N" to get next/previous occurrence
+    -- 5. press "[" or "]" to select next/previous cursor
+    -- 6. press "q" or "Q" to skip and remove current and get next/previous occurrence
+    -- 7. start insert mode with i,a,I,A
     {
         'mg979/vim-visual-multi',
-        keys = { "<c-n>" },
+        event = "VeryLazy"
     },
 
     -- enhance dot(.)

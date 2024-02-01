@@ -48,8 +48,8 @@ map("n", "<C-]>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width"
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
-map({ "n", "v" }, "0", "^", { desc = "Start of the line" })
-map({ "n", "v" }, ")", "$", { desc = "End of the line" })
+map({ "n", "v", "o" }, "0", "^", { desc = "Start of the line" })
+map({ "n", "v", "o" }, ")", "$", { desc = "End of the line" })
 
 -- save file
 map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
@@ -86,28 +86,11 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
--- navigate brace
-map("n", "[`", "?{<cr>:nohl<cr>", { desc = "Prev {" })
-map("n", "]`", "/}<cr>:nohl<cr>", { desc = "Next }" })
-
 -- lazy
 map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 
-map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
-map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
-
--- highlights under cursor
-if vim.fn.has("nvim-0.9.0") == 1 then
-    map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
-end
-
 -- floating terminal
-map("n", "<leader>w", function()
-    Util.float_term(nil, { cwd = Util.get_root() })
-end, { desc = "Terminal (root dir)" })
-map("n", "<leader>W", function()
-    Util.float_term()
-end, { desc = "Terminal (cwd)" })
+map("n", "<leader>w", function() Util.float_term() end, { desc = "Terminal (cwd)" })
 map("t", "<c-c>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
 
 -- lazygit
@@ -120,12 +103,8 @@ end, { desc = "Lazygit (cwd)" })
 
 -- toggle options
 map("n", "<leader>uf", Util.toggle_format, { desc = "Toggle format on Save" })
-map("n", "<leader>us", function()
-    Util.toggle("spell")
-end, { desc = "Toggle Spelling" })
-map("n", "<leader>uw", function()
-    Util.toggle("wrap")
-end, { desc = "Toggle Word Wrap" })
+map("n", "<leader>us", function() Util.toggle("spell") end, { desc = "Toggle Spelling" })
+map("n", "<leader>uw", function() Util.toggle("wrap") end, { desc = "Toggle Word Wrap" })
 map("n", "<leader>ud", Util.toggle_diagnostics, { desc = "Toggle Diagnostics" })
 local conceallevel = vim.o.conceallevel > 0 and vim.o.conceallevel or 3
 map("n", "<leader>uc", function()
@@ -151,7 +130,7 @@ local easy_compile = function()
         vim.cmd("!lua %")
     end
 end
-map("n", "<leader>r", easy_compile, { silent = true, desc = "compile current file" })
+map("n", "<F5>", easy_compile, { silent = true, desc = "compile current file" })
 
 map("n", "<leader>h", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile" })
 map(
