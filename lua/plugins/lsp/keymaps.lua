@@ -33,29 +33,50 @@ function M.get()
   return M._keys
 end
 
-function M.on_attach(client, buffer)
-  local Keys = require("lazy.core.handler.keys")
-  local keymaps = {} ---@type table<string,LazyKeys|{has?:string}>
 
-  for _, value in ipairs(M.get()) do
-    local keys = Keys.parse(value)
-    if keys[2] == vim.NIL or keys[2] == false then
-      keymaps[keys.id] = nil
-    else
-      keymaps[keys.id] = keys
+---@return (LazyKeys|{has?:string})[]
+-- used by lsp/init.lua on_attach
+function M.resolve(buffer)
+    local Keys = require("lazy.core.handler.keys")
+    if not Keys.resolve then
+        return {}
     end
-  end
+    local spec = M.get()
+    local opts = require("util").opts("nvim-lspconfig")
+    local clients = require("util").get_clients({ bufnr = buffer })
+    for _, client in ipairs(clients) do
+        local maps = opts.servers[client.name] and opts.servers[client.name].keys or {}
+        vim.list_extend(spec, maps)
+    end
+    return Keys.resolve(spec)
+end
 
-  for _, keys in pairs(keymaps) do
-    if not keys.has or client.server_capabilities[keys.has .. "Provider"] then
-      local opts = Keys.opts(keys)
-      ---@diagnostic disable-next-line: no-unknown
-      opts.has = nil
-      opts.silent = opts.silent ~= false
-      opts.buffer = buffer
-      vim.keymap.set(keys.mode or "n", keys[1], keys[2], opts)
+---@param method string
+-- used by lsp/init.lua on_attach
+function M.has(buffer, method)
+    method = method:find("/") and method or "textDocument/" .. method
+    local clients = require("util").get_clients({ bufnr = buffer })
+    for _, client in ipairs(clients) do
+        if client.supports_method(method) then
+            return true
+        end
     end
-  end
+    return false
+end
+
+function M.on_attach(_, buffer)
+    local Keys = require("lazy.core.handler.keys")
+    local keymaps = M.resolve(buffer)
+
+    for _, keys in pairs(keymaps) do
+        if not keys.has or M.has(buffer, keys.has) then
+            local opts = Keys.opts(keys)
+            opts.has = nil
+            opts.silent = opts.silent ~= false
+            opts.buffer = buffer
+            vim.keymap.set(keys.mode or "n", keys.lhs, keys.rhs, opts)
+        end
+    end
 end
 
 function M.diagnostic_goto(next, severity)
