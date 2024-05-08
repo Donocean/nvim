@@ -9,6 +9,8 @@ require("config.autocmds")
 require("config.keymaps")
 
 -- load scheme(gruvbox & everforest)
+vim.o.background = "light"
+vim.o.everforest_background = 'soft'
 vim.cmd.colorscheme("everforest")
 
 -- background transparent
