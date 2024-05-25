@@ -41,10 +41,41 @@ map("n", "}", "}zz")
 map("n", "{", "{zz")
 
 -- Resize window using <ctrl>+<arrow> keys
-map("n", "<C-Up>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
-map("n", "<C-Down>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
+map("n", "<C-'>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
+map("n", "<C-;>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
 map("n", "<C-[>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
 map("n", "<C-]>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
+
+test_win = function()
+    -- 获取窗口布局
+    local layout = vim.fn.winlayout()
+
+    for index, value in ipairs(layout) do
+        print(index, value)
+    end
+
+    -- 递归函数来检查窗口布局
+    local function check_split_type(layout)
+        if type(layout[2]) == "table" then
+            for _, sublayout in ipairs(layout[2]) do
+                local result = check_split_type(sublayout)
+                if result then
+                    return result
+                end
+            end
+        else
+            if layout[1] == "row" then
+                return "horizontal"
+            elseif layout[1] == "col" then
+                return "vertical"
+            end
+        end
+        return nil
+    end
+
+    local split_type = check_split_type(layout)
+    print("Current window split type is: " .. (split_type or "unknown"))
+end
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 

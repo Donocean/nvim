@@ -110,12 +110,8 @@ function M.telescope(builtin, opts)
     opts = params.opts
     opts = vim.tbl_deep_extend("force", { cwd = M.get_root() }, opts or {})
     if builtin == "files" then
-      if vim.loop.fs_stat((opts.cwd or vim.loop.cwd()) .. "/.git") then
-        opts.show_untracked = true
-        builtin = "git_files"
-      else
+        opts.find_command = { "rg", "--files", "--glob", "!**/build/*" }
         builtin = "find_files"
-      end
     end
     if opts.cwd and opts.cwd ~= vim.loop.cwd() then
       opts.attach_mappings = function(_, map)

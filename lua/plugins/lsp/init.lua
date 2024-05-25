@@ -230,7 +230,6 @@ return {
                 stdin = true,
                 args = { "--style=file:" .. cfg_path },
             })
-            ft("sh"):fmt("shfmt")
 
             -- call setup at last
             require("guard").setup(opts)

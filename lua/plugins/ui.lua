@@ -12,6 +12,9 @@ return {
         opts = {
             options = {
                 always_show_bufferline = false,
+                -- no buffer close icon
+                buffer_close_icon = ' ',
+
                 -- diagnostics = "nvim_lsp",
                 -- diagnostics_indicator = function(_, _, diag)
                 --     local icons = require("config.icons").icons.diagnostics
@@ -99,14 +102,24 @@ return {
     -- indent guides for Neovim
     {
         "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPost", "BufNewFile" },
+        event = "VeryLazy",
         opts = {
-            char = "│",
-            filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "mason" },
-            show_trailing_blankline_indent = false,
-            show_current_context = false,
-            space_char_blankline = " ",
+            indent = {
+                char = "│",
+                tab_char = "│",
+            },
+            scope = { show_start = false, show_end = false },
+            exclude = {
+                filetypes = {
+                    "help",
+                    "NvimTree",
+                    "lazy",
+                    "mason",
+                    "toggleterm",
+                },
+            },
         },
+        main = "ibl",
     },
 
     -- active indent guide and indent text objects
