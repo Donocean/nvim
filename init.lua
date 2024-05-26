@@ -8,10 +8,8 @@ require("config.lazy")
 require("config.autocmds")
 require("config.keymaps")
 
--- load scheme(gruvbox & everforest)
--- vim.o.background = "light"
--- vim.o.everforest_background = 'soft'
-vim.cmd.colorscheme("everforest")
+-- load scheme(gruvbox-material & everforest & rose-pine)
+vim.cmd.colorscheme("rose-pine")
 
 -- background transparent
 -- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
