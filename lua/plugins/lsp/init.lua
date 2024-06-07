@@ -187,7 +187,7 @@ return {
                 ensure_installed()
             end
 
-            -- Because there isn't clangd. So i use gitee to download  clangd rapidly.
+            -- Because there isn't clangd. So I use gitee to download  clangd rapidly.
             local c_lsp = vim.fn.stdpath("data") .. "/mason/packages/clangd"
             if not vim.loop.fs_stat(c_lsp) then
                 vim.fn.system({

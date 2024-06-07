@@ -41,10 +41,10 @@ map("n", "}", "}zz")
 map("n", "{", "{zz")
 
 -- Resize window using <ctrl>+<arrow> keys
-map("n", "<C-'>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
-map("n", "<C-;>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
-map("n", "<C-[>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
-map("n", "<C-]>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
+map("n", "<a-j>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
+map("n", "<a-k>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
+map("n", "<a-h>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
+map("n", "<a-l>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
 
 test_win = function()
     -- 获取窗口布局
@@ -158,7 +158,15 @@ local easy_compile = function()
         vim.cmd("res -5")
         vim.cmd("terminal g++ -g % -o %<.out && time ./%<.out && rm ./%<.out")
     elseif ft == "lua" then
-        vim.cmd("!lua %")
+        vim.cmd("set splitbelow")
+        vim.cmd("sp")
+        vim.cmd("res -5")
+        vim.cmd("terminal lua %")
+    elseif ft == "python" then
+        vim.cmd("set splitbelow")
+        vim.cmd("sp")
+        vim.cmd("res -5")
+        vim.cmd("terminal python3 %")
     end
 end
 map("n", "<F5>", easy_compile, { silent = true, desc = "compile current file" })
