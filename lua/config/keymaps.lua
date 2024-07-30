@@ -24,6 +24,8 @@ end
 -- open init.lua
 map("n", "<leader>n", ":e $MYVIMRC<cr>", { desc = "Config Nvim" })
 
+map("n", "<leader>q", "q", { desc = "record macro(occupied by flash)" })
+
 -- greatest remap ever
 map("x", "<leader>p", '"_dP', { desc = "paste without missing object" })
 
