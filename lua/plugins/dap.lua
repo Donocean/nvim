@@ -1,7 +1,3 @@
--- 单片机调试需要手动修改可执行文件名，并确保工程路径正确
-
-local mcu_elf_name = "test2.elf"
-
 return {
     "mfussenegger/nvim-dap",
     optional = true,
@@ -16,9 +12,9 @@ return {
         end,
     },
     opts = function()
-        local dap = require("debug")
+        local dap = require("dap")
 
-        dap.set_log_level("ERROR")
+        dap.set_log_level("debug")
 
         if not dap.adapters["codelldb"] then
             require("dap").adapters["codelldb"] = {
@@ -39,6 +35,46 @@ return {
         local cppdbg_exec_path = mason_path .. "packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
         --local codelldb_exec_path = mason_path .. "packages/codelldb/extension/adapter/codelldb"
         --local cortex_debug_exec_path = mason_path .. "packages/cortex-debug/extension/dist/debugadapter.js"
+        local elf_file_name = ""
+
+        -- 只支持一个，多个卡死..
+        local function find_elf_name()
+            local elf_dir = vim.fn.getcwd() .. "/build"
+            local elf_dir_file_table = vim.fn.readdir(elf_dir)
+            local elf_files = {}
+            for _, file in ipairs(elf_dir_file_table) do
+                if file:match("%.elf$") then
+                    table.insert(elf_files, elf_dir .. "/" .. file)
+                end
+            end
+
+            if #elf_files == 1 then
+                elf_file_name = elf_files[1]
+                return elf_files[1]
+            elseif #elf_files > 1 then
+                vim.fn.inputlist(elf_files)
+                local choice = vim.fn.input("Choose ELF file number[1][2][3]...: ")
+                elf_file_name = elf_files[tonumber(choice)]
+                return elf_files[tonumber(choice)]
+            else
+                print("No ELF file found in build directory")
+                return nil
+            end
+        end
+
+        local function get_elfname()
+            return elf_file_name
+        end
+
+        local function if_elf_valid()
+            local elf = get_elfname()
+            if elf then
+                return elf
+            else
+                print("cppdbg: No ELF file found in build directory")
+                return nil
+            end
+        end
 
         if not dap.adapters["cppdbg"] then
             require("dap").adapters["cppdbg"] = {
@@ -67,21 +103,23 @@ return {
                     pid = require("dap.utils").pick_process,
                     cwd = "${workspaceFolder}",
                 },
+                -------------------------------------MCU----------------------------------------------
+                -----------------------------------------------------------------------------------
                 {
-                    name = "[mcu]: Launch STM32",
+                    find_elf_name(),
+                    name = "Debug --openocd --load",
                     type = "cppdbg",
                     request = "launch",
-                    program = "${workspaceFolder}/build/" .. mcu_elf_name, -- 修改为实际的 ELF 文件路径
-                    -- program = function()
-                    --   return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/build/", "file")
-                    -- end,
-                    cwd = "${workspaceFolder}",
-                    miMode = "gdb",
-                    miDebuggerPath = "arm-none-eabi-gdb", -- 确保 GDB 在系统路径中
+                    MIMode = "gdb",
                     miDebuggerServerAddress = "localhost:3333",
+                    miDebuggerPath = "arm-none-eabi-gdb",
+                    cwd = "${workspaceFolder}",
+                    program = if_elf_valid(),
+
+                    stopAtEntry = false,
                     postRemoteConnectCommands = {
                         {
-                            text = "load build/" .. mcu_elf_name,
+                            text = "load " .. get_elfname(),
                         },
                         {
                             text = "monitor reset halt",
@@ -94,15 +132,30 @@ return {
                             ignoreFailures = true,
                         },
                     },
-                    preLaunchTask = function()
-                        os.execute("pkill openocd")
-                        os.execute("openocd -f interface/stlink.cfg -f target/stm32f1x.cfg > openocd.log 2>1&1")
-                    end,
+                },
+                {
+                    find_elf_name(),
+                    name = "Debug --openocd --not-load",
+                    type = "cppdbg",
+                    request = "launch",
+                    MIMode = "gdb",
+                    miDebuggerServerAddress = "localhost:3333",
+                    miDebuggerPath = "arm-none-eabi-gdb",
+                    cwd = "${workspaceFolder}",
+                    program = if_elf_valid(),
                     stopAtEntry = false,
-                    runInTerminal = false,
-                    externalConsole = false,
-                    svdPath = "${workspaceFolder}/STM32F103.svd",
-                    --showDevDebugOutput = "raw",
+                    postRemoteConnectCommands = {
+                        {
+                            text = "monitor reset halt",
+                        },
+                    },
+                    setupCommands = {
+                        {
+                            description = "Enable pretty-printing",
+                            text = "-enable-pretty-printing",
+                            ignoreFailures = true,
+                        },
+                    },
                 },
             }
         end

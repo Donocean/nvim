@@ -11,16 +11,42 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-        require("plugins.ui"),
-        require("plugins.colorscheme"),
-        require("plugins.coding"),
-        require("plugins.editor"),
-        require("plugins.lsp"),
-        require("plugins.treesitter"),
-        require("plugins.flash"),
-        -- require("plugins.markdown"),
-    },
+local function get_os()
+    local os_name
+    if vim.fn.has("macunix") == 1 then
+        os_name = "macOS"
+    elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+        os_name = "Windows"
+    elseif vim.fn.has("unix") == 1 then
+        os_name = "Linux"
+    else
+        os_name = "Unknown"
+    end
+    return os_name
+end
+
+local current_os = get_os()
+
+-- 基本插件列表
+local plugins = {
+    require("plugins.ui"),
+    require("plugins.colorscheme"),
+    require("plugins.coding"),
+    require("plugins.editor"),
+    require("plugins.lsp"),
+    require("plugins.treesitter"),
+    require("plugins.flash"),
+}
+
+if current_os == "macOS" then
+    table.insert(plugins, require("plugins.markdown"))
+end
+
+-- 使用 lazy 加载插件
+require("lazy").setup(plugins)
+
+require("lazy").setup(
+    plugins,
     {
         defaults = {
             --  all plugins lazy-loaded by default.

@@ -7,12 +7,6 @@ return {
         build = (not jit.os:find("Windows"))
             and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
             or nil,
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-            end,
-        },
         opts = {
             history = true,
             delete_check_events = "TextChanged",
@@ -31,6 +25,9 @@ return {
             { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
             { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
         },
+        config = function()
+            require("luasnip.loaders.from_snipmate").lazy_load()
+        end
     },
 
     -- auto completion
@@ -114,10 +111,22 @@ return {
         end,
     },
 
-    -- Doxygen generator
+    -- Annotations generator
     {
-        "babaybus/DoxygenToolkit.vim",
-        cmd = "Dox"
+        "danymat/neogen",
+        cmd = "Neogen",
+        keys = {
+            {
+                "<leader>cn",
+                function()
+                    require("neogen").generate()
+                end,
+                desc = "Generate Annotations (Neogen)",
+            },
+        },
+        opts = function(_, opts)
+            opts.snippet_engine = "luasnip"
+        end,
     },
 
     -- multi cursor
