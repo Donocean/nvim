@@ -16,14 +16,15 @@ return {
             lang_cmd = { "gcc" }
             lang_args = { "-g", file, "-o", out_path .. "demo" }
         elseif ft == "cpp" then
-            lang_cmd = "g++"
-            lang_args = { "-g % -o %<.out && time ./%<.out && rm ./%<.out" }
+            vim.cmd("silent !mkdir -p " .. out_path)
+            lang_cmd = {"g++"}
+            lang_args = { "-g", file, "-o", out_path .. "demo" }
         elseif ft == "lua" then
             lang_cmd = "lua"
-            lang_args = { "%" }
+            lang_args = { file }
         elseif ft == "python" then
             lang_cmd = "python3"
-            lang_args = { "%" }
+            lang_args = { file }
         end
 
         return {

@@ -144,35 +144,6 @@ map("n", "<leader>uc", function()
     Util.toggle("conceallevel", false, { 0, conceallevel })
 end, { desc = "Toggle Conceal" })
 
--- easy compile
-local easy_compile = function()
-    local ft = vim.bo.filetype
-
-    if ft == "c" then
-        -- 'gcc -g' means debug support
-        vim.cmd("set splitbelow")
-        vim.cmd("sp")
-        vim.cmd("res -5")
-        vim.cmd("terminal gcc -g % -o %<.out && time ./%<.out && rm ./%<.out")
-    elseif ft == "cpp" then
-        vim.cmd("set splitbelow")
-        vim.cmd("sp")
-        vim.cmd("res -5")
-        vim.cmd("terminal g++ -g % -o %<.out && time ./%<.out && rm ./%<.out")
-    elseif ft == "lua" then
-        vim.cmd("set splitbelow")
-        vim.cmd("sp")
-        vim.cmd("res -5")
-        vim.cmd("terminal lua %")
-    elseif ft == "python" then
-        vim.cmd("set splitbelow")
-        vim.cmd("sp")
-        vim.cmd("res -5")
-        vim.cmd("terminal python3 %")
-    end
-end
-map("n", "<F5>", easy_compile, { silent = true, desc = "compile current file" })
-
 map("n", "<leader>h", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "toggle headerfile" })
 map(
     "n",

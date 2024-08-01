@@ -5,31 +5,38 @@ snippet main
 	${0}
 		return 0;
 	}
+
 # #include <...>
 snippet inc
 	#include <${1:stdio}.h>
+
 # #include "..."
 snippet Inc
 	#include "${1:`vim_snippets#Filename("$1.h")`}"
+
 # ifndef...define...endif
 snippet ndef
 	#ifndef $1
 	#define ${1:SYMBOL}
 	${0}
 	#endif /* ifndef $1 */
+
 # define
 snippet def
 	#define
+
 # ifdef...endif
 snippet ifdef
 	#ifdef ${1:FOO}
 		${2:#define }
 	#endif
+
 # if
 snippet #if
 	#if ${1:FOO}
 		${0:${VISUAL}}
 	#endif
+
 # header include guard
 snippet once
 	#ifndef ${1:`toupper(vim_snippets#Filename('$1_H', 'UNTITLED_H'))`}
@@ -37,10 +44,10 @@ snippet once
 	#define $1
 
 	${0}
-
 	#endif /* end of include guard: $1 */
+
 # Disable C++ name mangling in C headers
-snippet nocxx
+snippet nocpp
 	#ifdef __cplusplus
 	extern "C" {
 	#endif
@@ -54,15 +61,20 @@ snippet nocxx
 ## Control Statements
 # if
 snippet if
-	if (${1:true}) {
+	if (${1:true})
+    {
 		${0:${VISUAL}}
 	}
 snippet ife
-	if (${1:true}) {
+	if (${1:true})
+    {
 		${2:${VISUAL}}
-	} else {
+	}
+    else
+    {
 		${0}
 	}
+
 # else
 snippet el
 	else {
@@ -75,13 +87,17 @@ snippet elif
 	}
 # ifi
 snippet ifi
-	if (${1:true}) ${0};
+	if (${1:true})
+        ${0};
+
 # ternary
 snippet t Ternary: `condition ? true : false`
 	$1 ? $2 : $0
+
 # switch
 snippet switch
-	switch (${1:/* variable */}) {
+	switch (${1:/* variable */})
+    {
 		case ${2:/* variable case */}:
 			${3}
 			${4:break;}${5}
@@ -90,7 +106,8 @@ snippet switch
 	}
 # switch without default
 snippet switchndef
-	switch (${1:/* variable */}) {
+	switch (${1:/* variable */})
+    {
 		case ${2:/* variable case */}:
 			${3}
 			${4:break;}${5}
@@ -100,11 +117,12 @@ snippet case
 	case ${1:/* variable case */}:
 		${2}
 		${3:break;}
+
 snippet ret
 	return ${0};
+
 snippet ex
 	exit($0);
-##
 ## Loops
 # for
 snippet for

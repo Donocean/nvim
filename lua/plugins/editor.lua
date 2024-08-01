@@ -378,7 +378,7 @@ return {
                     "user.cmake_run",
                     "user.make_clean",
                     "user.openocd_load",
-                    "user.c_quick_run",
+                    "user.quick_run",
                     "user.idf_build",
                 },
                 task_list = {
@@ -405,14 +405,6 @@ return {
                     },
                 },
             })
-
-            -- overseer.add_template_hook({
-            --   module = "^make$",
-            -- }, function(task_defn, util)
-            --   util.add_component(task_defn, { "on_output_quickfix", open_on_exit = "failure" })
-            --   util.add_component(task_defn, "on_complete_notify")
-            --   util.add_component(task_defn, { "display_duration", detail_level = 1 })
-            -- end)
         end,
     },
 }

@@ -3,7 +3,7 @@ return {
     builder = function()
         return {
             cmd = { "idf.py" },
-            args = { "build", "flash" "-b 2000000"},
+            args = { "build", "flash", "-b 2000000"},
             components = { { "on_output_quickfix", open = true }, "default" },
         }
     end,
