@@ -380,6 +380,8 @@ return {
                     "user.openocd_load",
                     "user.quick_run",
                     "user.idf_build",
+                    "user.raw_build",
+                    "user.raw_run",
                 },
                 task_list = {
                     -- bindings = {
