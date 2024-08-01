@@ -36,14 +36,12 @@ local plugins = {
     require("plugins.lsp"),
     require("plugins.treesitter"),
     require("plugins.flash"),
+    require("plugins.dap"),
 }
 
 if current_os == "macOS" then
     table.insert(plugins, require("plugins.markdown"))
 end
-
--- 使用 lazy 加载插件
-require("lazy").setup(plugins)
 
 require("lazy").setup(
     plugins,

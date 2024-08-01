@@ -14,11 +14,11 @@ return {
             local out_path = file_dir .. "/build/"
             vim.cmd("silent !mkdir -p " .. out_path)
             lang_cmd = { "gcc" }
-            lang_args = { "-g", file, "-o", out_path .. "demo" }
+            lang_args = { "-g", file, "-o", out_path .. "demo.elf" }
         elseif ft == "cpp" then
             vim.cmd("silent !mkdir -p " .. out_path)
             lang_cmd = {"g++"}
-            lang_args = { "-g", file, "-o", out_path .. "demo" }
+            lang_args = { "-g", file, "-o", out_path .. "demo.elf" }
         elseif ft == "lua" then
             lang_cmd = "lua"
             lang_args = { file }
