@@ -1,5 +1,5 @@
 return {
-    name = "raw make .",
+    name = "make .",
     builder = function()
         return {
             cmd = { "make" },

@@ -16,6 +16,7 @@ return {
             lang_cmd = { "gcc" }
             lang_args = { "-g", file, "-o", out_path .. "demo.elf" }
         elseif ft == "cpp" then
+            local out_path = file_dir .. "/build/"
             vim.cmd("silent !mkdir -p " .. out_path)
             lang_cmd = {"g++"}
             lang_args = { "-g", file, "-o", out_path .. "demo.elf" }

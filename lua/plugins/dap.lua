@@ -1,7 +1,6 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        -- optional = true,
         dependencies = {
             -- Ensure C/C++ and python debugger is installed
             {
@@ -65,6 +64,15 @@ return {
             local dap = require("dap")
             local elf_file_name = ""
             local mason_path = vim.fn.glob(vim.fn.stdpath("data")) .. "/mason/"
+
+            -- set dap icons
+            for name, sign in pairs(require("config.icons").icons.dap) do
+                sign = type(sign) == "table" and sign or { sign }
+                vim.fn.sign_define(
+                "Dap" .. name,
+                { text = sign[1], texthl = sign[2] or "DiagnosticInfo", linehl = sign[3], numhl = sign[3] }
+                )
+            end
 
             local cppdbg_exec_path = mason_path .. "packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
             --local codelldb_exec_path = mason_path .. "packages/codelldb/extension/adapter/codelldb"

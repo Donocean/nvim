@@ -1,16 +1,16 @@
 return {
-    name = "raw run .",
+    name = "run ./demo.elf",
     builder = function()
         return {
-            cmd = { "./demo" },
+            cmd = { "./demo.elf" },
             components = {
-                { "on_output_quickfix", set_diagnostics = true },
+                { "on_output_quickfix", open = true },
                 "on_result_diagnostics",
                 "default",
             },
         }
     end,
     condition = {
-        filetype = { "c" },
+        filetype = { "c", "cpp" },
     },
 }

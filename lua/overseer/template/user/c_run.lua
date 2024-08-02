@@ -1,7 +1,7 @@
 return {
     name = "run file",
     builder = function()
-        local cmd = { "./build/demo" }
+        local cmd = { "./build/demo.elf" }
         return {
             cmd = cmd,
             components = {
