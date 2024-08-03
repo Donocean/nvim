@@ -25,7 +25,7 @@ function M.get()
       { "<leader>cf","<cmd>GuardFmt<cr>", desc = "Format File"},
       { "+", "=<cmd>GuardFmt<cr>", desc = "Format Range", mode = "v"},
       { "<leader>a", "<cmd>Lspsaga code_action<cr>", desc = "Code Action", has = "codeAction" },
-      { "<leader>r", "<cmd>:Lspsaga rename<cr>", desc = "Rename", has = "rename" },
+      { "<leader>cr", "<cmd>:Lspsaga rename<cr>", desc = "Rename", has = "rename" },
       { "<leader>k", "<cmd>Lspsaga peek_definition<cr>", desc = "Peek Definition"},
       { "<leader>o", "<cmd>Lspsaga outline<cr>", desc = "Outline"},
     }

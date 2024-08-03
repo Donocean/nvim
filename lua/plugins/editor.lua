@@ -264,6 +264,7 @@ return {
                 ["<leader>u"] = { name = "+ui" },
                 ["<leader>w"] = { name = "+windows" },
                 ["<leader>x"] = { name = "+diagnostics/quickfix" },
+                ["<leader>r"] = { name = "+overseer" },
             },
         },
         config = function(_, opts)
@@ -360,13 +361,13 @@ return {
             "OverseerClearCache",
         },
         keys = {
-            { "<leader>ow", "<cmd>OverseerToggle<cr>",      desc = "Task list" },
-            { "<leader>oo", "<cmd>OverseerRun<cr>",         desc = "Run task" },
-            { "<leader>oa", "<cmd>OverseerQuickAction<cr>", desc = "Action recent task" },
-            { "<leader>oi", "<cmd>OverseerInfo<cr>",        desc = "Overseer Info" },
-            { "<leader>ob", "<cmd>OverseerBuild<cr>",       desc = "Task builder" },
-            { "<leader>ot", "<cmd>OverseerTaskAction<cr>",  desc = "Task action" },
-            { "<leader>oc", "<cmd>OverseerClearCache<cr>",  desc = "Clear cache" },
+            { "<leader>rw", "<cmd>OverseerToggle<cr>",      desc = "Task list" },
+            { "<leader>rr", "<cmd>OverseerRun<cr>",         desc = "Run task" },
+            { "<leader>ra", "<cmd>OverseerQuickAction<cr>", desc = "Action recent task" },
+            { "<leader>ri", "<cmd>OverseerInfo<cr>",        desc = "Overseer Info" },
+            { "<leader>rb", "<cmd>OverseerBuild<cr>",       desc = "Task builder" },
+            { "<leader>rt", "<cmd>OverseerTaskAction<cr>",  desc = "Task action" },
+            { "<leader>rc", "<cmd>OverseerClearCache<cr>",  desc = "Clear cache" },
         },
         config = function()
             local overseer = require("overseer")
