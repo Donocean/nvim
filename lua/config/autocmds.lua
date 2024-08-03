@@ -37,6 +37,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- close some filetypes with <q>
+-- To see the pattern of the current opened file, use `:set filetype?`
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup("close_with_q"),
     pattern = {
@@ -50,6 +51,9 @@ vim.api.nvim_create_autocmd("FileType", {
         "startuptime",
         "tsplayground",
         "checkhealth",
+        "dap-float",
+        "dap-repl",
+        "gitsigns.blame",
     },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
