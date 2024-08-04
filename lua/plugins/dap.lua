@@ -179,9 +179,9 @@ return {
                         request = "launch",
                         name = "debug c/cpp",
                         program = function()
-                            find_elf_name()
-                            -- return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                            return get_elfname()
+                            -- find_elf_name()
+                            -- return get_elfname()
+                            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
                         end,
                         cwd = "${workspaceFolder}",
                     },

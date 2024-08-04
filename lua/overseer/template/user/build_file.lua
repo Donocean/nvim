@@ -15,11 +15,11 @@ return {
         if file_exists(current_makefile_path) then
             -- It is makefile project. the makefile is in current path
             lang_cmd = { "make" }
-            lang_args = { "-j" }
+            lang_args = { "-j6" }
         elseif file_exists(build_makefile_path) then
             -- It is cmake project. the makefile is in the ./build
             lang_cmd = { "make" }
-            lang_args = { "-C", current_path .. "/build/", "-s", "-j" }
+            lang_args = { "-C", current_path .. "/build/", "-s", "-j6" }
         else
             -- It is singal file. no makefile. just use the gcc/g++ to compile
             local ft = vim.bo.filetype

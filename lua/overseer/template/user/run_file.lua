@@ -24,7 +24,7 @@ return {
             end
         elseif ft == "python" then
             local file = vim.api.nvim_buf_get_name(0)
-            lang_cmd = "python3"
+            lang_cmd = { "python3" }
             lang_args = { file }
         end
 
