@@ -5,12 +5,25 @@ return {
     -- file explorer
     {
         "nvim-tree/nvim-tree.lua",
-        keys = { {
-            "<leader>e",
-            "<cmd>NvimTreeToggle<cr><cmd>IlluminatePauseBuf<cr>",
-            silent = true,
-            desc = "Explorer NeoTree"
-        } },
+        keys = {
+            {
+                "<leader>e",
+                "<cmd>NvimTreeToggle<cr><cmd>IlluminatePauseBuf<cr>",
+                silent = true,
+                desc = "Explorer NeoTree"
+            },
+
+            {
+                "<leader>cd",
+                function()
+                    local fdir = vim.api.nvim_buf_get_name(0)
+                    local fdir = vim.fn.fnamemodify(fdir, ':h')
+                    vim.cmd("NvimTreeOpen  " .. fdir)
+                end,
+                silent = true,
+                desc = "open current file dir"
+            },
+        },
         opts = {
             sort_by = "case_sensitive",
             hijack_cursor = true,

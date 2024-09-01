@@ -21,6 +21,16 @@ local function map(mode, lhs, rhs, opts)
     end
 end
 
+map("n", "<leader>cs",
+    function()
+        local state_path = vim.fn.stdpath('state')
+        local swap_file = state_path .. "/swap/*"
+        vim.cmd("silent !rm " .. swap_file )
+        vim.cmd("silent !rm " .. state_path .. "/lsp.log")
+    end,
+    { desc = "clean the swap file and lsp.log" }
+)
+
 -- open init.lua
 map("n", "<leader>n", ":e $MYVIMRC<cr>", { desc = "Config Nvim" })
 
@@ -47,37 +57,6 @@ map("n", "<a-j>", "<cmd>resize+5<cr>", { desc = "Increase window height" })
 map("n", "<a-k>", "<cmd>resize-5<cr>", { desc = "Decrease window height" })
 map("n", "<a-h>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width" })
 map("n", "<a-l>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
-
-test_win = function()
-    -- 获取窗口布局
-    local layout = vim.fn.winlayout()
-
-    for index, value in ipairs(layout) do
-        print(index, value)
-    end
-
-    -- 递归函数来检查窗口布局
-    local function check_split_type(layout)
-        if type(layout[2]) == "table" then
-            for _, sublayout in ipairs(layout[2]) do
-                local result = check_split_type(sublayout)
-                if result then
-                    return result
-                end
-            end
-        else
-            if layout[1] == "row" then
-                return "horizontal"
-            elseif layout[1] == "col" then
-                return "vertical"
-            end
-        end
-        return nil
-    end
-
-    local split_type = check_split_type(layout)
-    print("Current window split type is: " .. (split_type or "unknown"))
-end
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
 
