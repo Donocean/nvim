@@ -420,4 +420,32 @@ return {
             })
         end,
     },
+
+    -- for python miniconda use
+    {
+        "linux-cultist/venv-selector.nvim",
+        ft = "python",
+        cmd = { "VenvSelect", "VenvSelectCached" },
+        keys = {
+            {
+                "<leader>v",
+                "<cmd>VenvSelect<cr>",
+                silent = true,
+                desc = "change miniconda environment"
+            },
+        },
+        opts = {
+            anaconda_base_path = "~/miniconda3",
+            anaconda_envs_path = "~/miniconda3/envs",
+            parents = 0,
+            stay_on_this_version = true,
+            dap_enabled = false, -- need the plugin mfussenegger/nvim-dap-python
+            settings = {
+                options = {
+                    notify_user_on_venv_activation = true,
+                },
+            },
+        },
+    },
+
 }

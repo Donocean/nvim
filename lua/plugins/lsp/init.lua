@@ -56,6 +56,8 @@ return {
                         "--header-insertion=never",
                     }
                 },
+                basedpyright = {
+                },
             },
             -- you can do any additional lsp server setup here
             -- return true if you don't want this server to be setup with lspconfig
@@ -166,6 +168,8 @@ return {
         opts = {
             ensure_installed = {
                 "shfmt",
+                "ruff",
+                "basedpyright",
                 "clang-format",
                 "cmake-language-server",
             },
@@ -230,6 +234,12 @@ return {
                 cmd = "clang-format",
                 stdin = true,
                 args = { "--style=file:" .. cfg_path },
+            })
+
+            ft("python"):fmt({
+                cmd = "ruff",
+                args = { 'format', '-' },
+                stdin = true,
             })
 
             -- call setup at last
