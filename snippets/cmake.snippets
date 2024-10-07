@@ -1,7 +1,13 @@
-snippet lspdb
+snippet lsp
 	set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-snippet cmakeEM_6ull
+snippet cver
+    set(CMAKE_C_STANDARD ${0:99})
+
+snippet cppver
+    set(CMAKE_CXX_STANDARD ${0:11})
+
+snippet 6ull
 	cmake_minimum_required(VERSION 3.10)
 
 	set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -82,13 +88,13 @@ snippet minc
 
 	add_executable(demo ${0:main}.c)
 
-snippet include
-	include_directories(${${0:include_dir}})
+snippet inc
+	target_include_directories(${${0:include_dir}})
 
 snippet find
 	find_package(${1:library} ${0:REQUIRED})
 
-snippet glob
+snippet file
 	file(glob ${1:srcs} *.${0:cpp})
 
 snippet subdir

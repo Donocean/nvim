@@ -11,8 +11,9 @@ return {
             return stat and stat.type == 'directory'
         end
 
+        local file = vim.api.nvim_buf_get_name(0)  -- get full path of current file
         if ft == "c" or ft == "cpp" then
-            local current_path = vim.fn.getcwd()
+            local current_path = vim.fn.fnamemodify(file, ":h")  -- no file name, only need abs path
             local build_path = current_path .. "/build"
 
             if directory_exists(build_path) then
@@ -23,7 +24,6 @@ return {
                 lang_cmd = current_path .. "/demo"
             end
         elseif ft == "python" then
-            local file = vim.api.nvim_buf_get_name(0)
             lang_cmd = { "python3" }
             lang_args = { file }
         end

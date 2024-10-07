@@ -9,7 +9,8 @@ return {
             return stat ~= nil
         end
 
-        local current_path = vim.fn.getcwd()
+        local file = vim.api.nvim_buf_get_name(0)  -- get full path of current file
+        local current_path = vim.fn.fnamemodify(file, ":h")  -- no file name, only need abs path
         local current_makefile_path = current_path .. "/Makefile"
         local build_makefile_path = current_path .. "/build/Makefile"
         if file_exists(current_makefile_path) then
@@ -23,7 +24,6 @@ return {
         else
             -- It is singal file. no makefile. just use the gcc/g++ to compile
             local ft = vim.bo.filetype
-            local file = vim.api.nvim_buf_get_name(0)
             local out_path = current_path .. "/build/"
 
             if ft == "c" then
