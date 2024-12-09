@@ -103,7 +103,7 @@ map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 
 -- floating terminal
 map("n", "<leader>w", function() Util.float_term() end, { desc = "Terminal (cwd)" })
-map("t", "<c-c>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+map("t", "<c-c>", "<c-\\><c-n>:q<cr>", { desc = "Quit Terminal" })
 
 -- lazygit
 map("n", "<leader>gg", function()
