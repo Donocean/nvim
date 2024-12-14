@@ -393,6 +393,7 @@ return {
                     "user.cmake_run",
                     "user.openocd_load",
                     "user.idf_build",
+                    "user.openocd_flash",
                 },
                 task_list = {
                     -- bindings = {

@@ -10,6 +10,7 @@ opt.wildmenu = true
 opt.showcmd = true
 opt.wrap = true
 opt.cursorline = true -- Enable highlighting of the current line
+opt.jumpoptions = "stack"
 
 -- tab
 opt.autoindent = true

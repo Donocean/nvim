@@ -9,18 +9,26 @@ return {
             return stat ~= nil
         end
 
-        local file = vim.api.nvim_buf_get_name(0)  -- get full path of current file
-        local current_path = vim.fn.fnamemodify(file, ":h")  -- no file name, only need abs path
+        local work_path = vim.fn.getcwd()                   -- get current work directory path
+        local file = vim.api.nvim_buf_get_name(0)           -- get full path of current file
+        local current_path = vim.fn.fnamemodify(file, ":h") -- no file name, only need abs path
         local current_makefile_path = current_path .. "/Makefile"
         local build_makefile_path = current_path .. "/build/Makefile"
+        local work_makefile_path = work_path .. "/build/Makefile"
+
         if file_exists(current_makefile_path) then
             -- It is makefile project. the makefile is in current path
             lang_cmd = { "make" }
             lang_args = { "-j6" }
-        elseif file_exists(build_makefile_path) then
+        elseif file_exists(build_makefile_path) or file_exists(work_makefile_path) then
             -- It is cmake project. the makefile is in the ./build
             lang_cmd = { "make" }
-            lang_args = { "-C", current_path .. "/build/", "-s", "-j6" }
+
+            if file_exists(build_makefile_path) then
+                lang_args = { "-C", current_path .. "/build/", "-s", "-j6" }
+            else
+                lang_args = { "-C", work_path .. "/build/", "-s", "-j6" }
+            end
         else
             -- It is singal file. no makefile. just use the gcc/g++ to compile
             local ft = vim.bo.filetype
