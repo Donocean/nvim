@@ -172,6 +172,7 @@ return {
                 "basedpyright",
                 "clang-format",
                 "cmake-language-server",
+                "yamlfmt"
             },
         },
         ---@param opts MasonSettings | {ensure_installed: string[]}
@@ -215,6 +216,10 @@ return {
     {
         "nvimdev/guard.nvim",
         event = "VeryLazy",
+        keys = {
+            { "<leader>cf", "<cmd>GuardFmt<cr>",  desc = "Format File" },
+            { "<leader>cf", "=<cmd>GuardFmt<cr>", desc = "Format Range", mode = "v" },
+        },
         opts = {
             -- the only options for the setup function
             fmt_on_save = false,
@@ -242,6 +247,11 @@ return {
                 stdin = true,
             })
 
+            ft("yaml"):fmt({
+                cmd = "yamlfmt",
+                args = { '-' },
+                stdin = true,
+            })
             -- call setup at last
             require("guard").setup(opts)
         end,
