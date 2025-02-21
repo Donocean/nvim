@@ -25,6 +25,10 @@ snippet ndef
 snippet def
 	#define
 
+# std::cout <<  << std::endl;
+snippet cou
+    std::cout << $1 << std::endl;
+
 # ifdef...endif
 snippet ifdef
 	#ifdef ${1:FOO}
