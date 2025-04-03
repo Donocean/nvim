@@ -27,6 +27,7 @@ return {
                 "matlab",
                 "yaml",
                 "json",
+                "xml",
             },
             incremental_selection = {
                 enable = true,
