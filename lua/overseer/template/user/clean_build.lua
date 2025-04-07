@@ -4,22 +4,20 @@ return {
         local lang_cmd = {}
         local lang_args = {}
 
-        local function file_exists(filepath)
-            local stat = vim.loop.fs_stat(filepath)
-            return stat ~= nil
-        end
+        local Util = require("util")
+        local file = vim.api.nvim_buf_get_name(0)           -- get full path of current file
+        local current_path = vim.fn.fnamemodify(file, ":h") -- no file name, only need abs path
+        local project_root = Util.find_path_on_pattern(current_path, "/Makefile")
+        local build_root = Util.find_path_on_pattern(current_path, "/build")
 
-        local current_path = vim.fn.getcwd()
-        local current_makefile_path = current_path .. "/Makefile"
-        local build_makefile_path = current_path .. "/build/Makefile"
-        if file_exists(current_makefile_path) then
-            -- It is makefile project. the makefile is in current path
+        if project_root ~= nil then
+            -- It is a makefile project.
             lang_cmd = { "make" }
-            lang_args = { "clean" }
-        elseif file_exists(build_makefile_path) then
-            -- It is cmake project. the makefile is in the ./build
+            lang_args = { "-C", project_root, "clean" }
+        elseif build_root ~= nil then
+            -- It is a cmake project. the makefile is in the /build dir
             lang_cmd = { "make" }
-            lang_args = { "clean", "-C", current_path .. "/build/", "-s" }
+            lang_args = { "-C", build_root .. "/build/", "clean" }
         else
             -- It is singal file. no makefile.
             local out_path = current_path .. "/build/"
@@ -34,6 +32,6 @@ return {
         }
     end,
     condition = {
-        filetype = { "c", "cpp" },
+        filetype = { "c", "cpp", "make" },
     },
 }
