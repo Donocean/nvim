@@ -70,6 +70,8 @@ vim.g.bigfile_size = 1024 * 1024 * 1.5 -- 1.5 MB
 -- map some filetypes
 vim.filetype.add({
     extension = {
-        launch = 'xml'
+        launch = 'xml',
+        sdf = 'xml',
+        urdf = 'xml',
     }
 })
