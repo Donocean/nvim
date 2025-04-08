@@ -14,7 +14,7 @@ return {
             -- It is a makefile project.
             lang_cmd = { "make" }
             lang_args = { "-C", project_root, "clean" }
-        elseif build_root ~= nil then
+        elseif build_root ~= nil and vim.loop.fs_stat(build_root .. "build/Makefile") ~= nil then
             -- It is a cmake project. the makefile is in the /build dir
             lang_cmd = { "make" }
             lang_args = { "-C", build_root .. "/build/", "clean" }
