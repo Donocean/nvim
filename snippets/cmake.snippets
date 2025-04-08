@@ -45,19 +45,16 @@ snippet 6ull
 snippet init
 	cmake_minimum_required(VERSION ${1:3.10})
 
+	set(CMAKE_CXX_STANDARD ${2:11})
 	set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-	project(${2:ProjectName})
+	project(${3:ProjectName})
 
-	find_package(${3:library})
+	add_executable($3 
+		$0)
 
-	include_directories(${$3_INCLUDE_DIRS})
-
-	add_subdirectory(${0:src})
-
-	add_executable($2)
-
-	target_link_libraries($2 ${$3_LIBRARIES})
+	target_include_directories($3 PUBLIC
+		$4)
 
 snippet proj
 	project(${0:Name})
