@@ -67,7 +67,7 @@ vim.g.markdown_recommended_style = 0
 -- LSP, treesitter and other ft plugins will be disabled.
 vim.g.bigfile_size = 1024 * 1024 * 1.5 -- 1.5 MB
 
--- map some filetypes
+-- map some filetypes for ROS
 vim.filetype.add({
     extension = {
         launch = 'xml',
@@ -76,6 +76,9 @@ vim.filetype.add({
     }
 })
 
+-- copy-paste to system clipboard when using SSH
+-- the terminla used by users must support OSC52
+-- you can excute: [$echo -ne "\033]52;c;$(echo -n hello | base64)\a"] in your terminla to check if it's support
 if os.getenv("SSH_TTY") then
     vim.g.clipboard = {
         name = 'OSC 52',
@@ -84,8 +87,12 @@ if os.getenv("SSH_TTY") then
             ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
         },
         paste = {
-            ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-            ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+            ['+'] = function(lines)
+                return { vim.fn.split(vim.fn.getreg(''), "\n"), vim.fn.getregtype('') }
+            end,
+            ['*'] = function(lines)
+                return { vim.fn.split(vim.fn.getreg(''), "\n"), vim.fn.getregtype('') }
+            end
         },
     }
 end
