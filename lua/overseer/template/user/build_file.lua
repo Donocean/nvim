@@ -31,7 +31,7 @@ return {
             elseif ft == "cpp" then
                 vim.cmd("silent !mkdir -p " .. out_path)
                 lang_cmd = { "g++" }
-                lang_args = { "-g", "-std=c++11", file, "-o", out_path .. "demo" }
+                lang_args = { "-g", "-std=c++17", file, "-o", out_path .. "demo" }
             end
         end
 
