@@ -7,10 +7,16 @@ return {
         local project_root = Util.find_path_on_pattern(path, "/CMakeLists.txt")
 
         project_root = project_root or current_dir
-
+        local build_dir = project_root .. "/build"
+        local command = string.format(
+            "cmake -S '%s' -B '%s' -DCMAKE_BUILD_TYPE=Debug && cmake --build '%s'",
+            project_root,
+            build_dir,
+            build_dir
+        )
         return {
-            cmd = { "cmake" },
-            args = { "-S", project_root, "-B", project_root .. "/build", "-D", "CMAKE_BUILD_TYPE=Debug" },
+            cmd = { "sh", "-c" },
+            args = { command },
             components = { { "on_output_quickfix", open = true }, "default" },
         }
     end,
