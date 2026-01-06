@@ -252,6 +252,11 @@ return {
                 args = { '-' },
                 stdin = true,
             })
+            ft("xml"):fmt({
+                cmd = "xmlformat",
+                args = { '-' },
+                stdin = true,
+            })
             -- call setup at last
             require("guard").setup(opts)
         end,

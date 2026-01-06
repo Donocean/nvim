@@ -12,11 +12,12 @@ return {
             },
         },
     },
-    config = function (_, opts)
+    config = function(_, opts)
         require("flash").setup(opts)
     end,
     -- stylua: ignore
     keys = {
-        { "q", mode = { "n", "o", "x" }, function() require("flash").jump() end, desc = "Flash" },
+        { "q", mode = { "n", "o", "x" }, function() require("flash").jump() end,              desc = "Flash" },
+        { "R", mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
     },
 }
