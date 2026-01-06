@@ -46,7 +46,7 @@ return {
                 options = {
                     theme = "auto",
                     globalstatus = true,
-                    disabled_filetypes = { statusline = { "dashboard", "alpha" } },
+                    disabled_filetypes = { statusline = { "dashboard", "alpha", "oil" } },
                 },
                 sections = {
                     lualine_a = { "mode" },
@@ -147,6 +147,6 @@ return {
     {
         'stevearc/dressing.nvim',
         event = "VeryLazy",
-        opts = { },
+        opts = {},
     },
 }
