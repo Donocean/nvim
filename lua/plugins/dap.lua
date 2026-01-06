@@ -258,7 +258,8 @@ return {
                     name = "debug python";
                     program = "${file}"; -- This configuration will launch the current file if used.
                     pythonPath = function()
-                            return '/usr/bin/python3'
+                            -- return '/usr/bin/python3'
+                            return 'python3'
                     end;
                 },
             }

@@ -56,8 +56,8 @@ return {
                         "--header-insertion=never",
                     }
                 },
-                basedpyright = {
-                },
+                basedpyright = {},
+                texlab = {},
             },
             -- you can do any additional lsp server setup here
             -- return true if you don't want this server to be setup with lspconfig
@@ -252,6 +252,9 @@ return {
                 args = { '-' },
                 stdin = true,
             })
+
+            ft("tex"):fmt("tex-fmt")
+
             -- call setup at last
             require("guard").setup(opts)
         end,

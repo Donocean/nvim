@@ -99,7 +99,7 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 
 -- lazy
-map("n", "<leader>l", "<cmd>:Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>ul", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 
 -- floating terminal
 map("n", "<leader>w", function() Util.float_term() end, { desc = "Terminal (cwd)" })

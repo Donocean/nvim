@@ -41,6 +41,7 @@ local plugins = {
 
 if current_os == "macOS" then
     table.insert(plugins, require("plugins.markdown"))
+    table.insert(plugins, require("plugins.latex"))
 end
 
 require("lazy").setup(
