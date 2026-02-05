@@ -331,6 +331,7 @@ return {
                     "user.openocd_load",
                     "user.idf_build",
                     "user.openocd_flash",
+                    "user.oil_open",
                 },
                 task_list = {
                     -- bindings = {
