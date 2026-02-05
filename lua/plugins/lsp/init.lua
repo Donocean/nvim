@@ -255,6 +255,12 @@ return {
 
             ft("tex"):fmt("tex-fmt")
 
+            ft("xml"):fmt({
+                cmd = "xmlformat",
+                args = { '-' },
+                stdin = true,
+            })
+
             -- call setup at last
             require("guard").setup(opts)
         end,
