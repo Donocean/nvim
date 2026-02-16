@@ -25,7 +25,7 @@ map("n", "<leader>cs",
     function()
         local state_path = vim.fn.stdpath('state')
         local swap_file = state_path .. "/swap/*"
-        vim.cmd("silent !rm " .. swap_file )
+        vim.cmd("silent !rm " .. swap_file)
         vim.cmd("silent !rm " .. state_path .. "/lsp.log")
     end,
     { desc = "clean the swap file and lsp.log" }
@@ -103,7 +103,8 @@ map("n", "<leader>ul", "<cmd>:Lazy<cr>", { desc = "Lazy" })
 
 -- floating terminal
 map("n", "<leader>w", function() Util.float_term() end, { desc = "Terminal (cwd)" })
-map("t", "<c-c>", "<c-\\><c-n>:q<cr>", { desc = "Quit Terminal" })
+map("t", "<c-c>", "<c-\\><c-n>", { desc = "Quit Terminal" })
+map("t", "<esc>", "<c-\\><c-n>:q<cr>", { desc = "Quit Terminal" })
 
 -- lazygit
 map("n", "<leader>gg", function()
@@ -130,3 +131,13 @@ map(
     [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
     { desc = "rename word under current cursor" }
 )
+
+map("n", "<leader>W", function()
+        vim.cmd('copen')
+        vim.cmd('terminal')
+        vim.cmd('set filetype=lazy')
+        vim.cmd('startinsert')
+        vim.bo.buflisted = false
+        vim.bo.bufhidden = 'wipe'
+    end,
+    { desc = "Toggle hsplit terminal" })

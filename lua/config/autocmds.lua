@@ -36,7 +36,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end,
 })
 
--- close some filetypes with <q>
+-- close some filetypes with <q> and ctrl+c
 -- To see the pattern of the current opened file, use `:set filetype?`
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup("close_with_q"),
@@ -46,6 +46,8 @@ vim.api.nvim_create_autocmd("FileType", {
         "lspinfo",
         "man",
         "notify",
+        "OverseerList",
+        "lazy",
         "qf",
         "spectre_panel",
         "startuptime",

@@ -38,8 +38,8 @@ return {
                 ["<C-l>"] = false,
                 ["-"] = false,
                 ["<CR>"] = "actions.refresh",
-                ["<S-h>"] = { "actions.parent", mode = "n" },
-                ["<S-l>"] = "actions.select",
+                ["<c-h>"] = { "actions.parent", mode = "n" },
+                ["<c-l>"] = "actions.select",
                 ["<C-c>"] = { "actions.close", mode = "n" },
             },
         },
@@ -180,7 +180,52 @@ return {
                     },
                 },
             },
+            extensions = {
+                project = {
+                    theme = "dropdown",
+                    order_by = "recent",
+                    search_by = "title",
+                    ignore_missing_dirs = true,
+
+                    mappings = {
+                        i = {
+                            ['<c-d>'] = function(...)
+                                return require("telescope._extensions.project.actions").delete_project(...)
+                            end,
+                            ['<c-r>'] = function(...)
+                                return require("telescope._extensions.project.actions").rename_project(...)
+                            end,
+                            ['<c-a>'] = function(...)
+                                return require("telescope._extensions.project.actions").add_project(...)
+                            end,
+                            ['<c-s>'] = function(...)
+                                return require("telescope._extensions.project.actions").search_in_project_files(...)
+                            end,
+                            ['<c-o>'] = function(...)
+                                return require("telescope._extensions.project.actions").next_cd_scope(...)
+                            end,
+                        }
+                    },
+                },
+            },
         },
+    },
+
+    -- project for telescope find
+    {
+        'nvim-telescope/telescope-project.nvim',
+        dependencies = { 'nvim-telescope/telescope.nvim' },
+        keys = {
+            {
+                "<leader>po",
+                "<cmd>lua require'telescope'.extensions.project.project{display_type = 'full', hide_workspace = true }<cr>",
+                silent = true,
+                desc = "find project"
+            },
+        },
+        config = function()
+            require('telescope').load_extension('project')
+        end
     },
 
     -- which-key
