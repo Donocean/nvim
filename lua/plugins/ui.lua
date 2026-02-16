@@ -83,6 +83,20 @@ return {
                                 removed = icons.git.removed,
                             },
                         },
+                        {
+                            function()
+                                local conda_env = vim.fn.getenv("CONDA_DEFAULT_ENV")
+                                if conda_env and conda_env ~= "" then
+                                    local conda_icon = "  "
+                                    return conda_icon .. conda_env
+                                else
+                                    return ""
+                                end
+                            end,
+
+                            color = Util.fg("Blue"),
+                            padding = { left = 1, right = 1 },
+                        },
                     },
                     lualine_y = {
                         { "progress", separator = " ",                  padding = { left = 1, right = 0 } },
