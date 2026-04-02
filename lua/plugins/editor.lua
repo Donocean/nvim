@@ -213,6 +213,16 @@ return {
 
     -- project for telescope find
     {
+        -- insert mode:
+        -- <c-d> 	delete currently selected project
+        -- <c-v> 	rename currently selected project
+        -- <c-a> 	create a project*
+        -- <c-s> 	grep string inside files within your project
+        -- <c-l> 	change to the selected project's directory without opening it
+        -- <c-r> 	find a recently opened file within your project
+        -- <c-f> 	find a file within your project (same as <CR>)
+        -- <c-o> 	change current cd scope
+        -- <c-b> 	browse inside files within your project
         'nvim-telescope/telescope-project.nvim',
         dependencies = { 'nvim-telescope/telescope.nvim' },
         keys = {

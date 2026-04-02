@@ -51,6 +51,7 @@ return {
                     },
                 },
                 clangd = {
+                    mason = false,
                     cmd = {
                         "clangd",
                         "--header-insertion=never",
