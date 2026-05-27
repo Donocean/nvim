@@ -39,8 +39,11 @@ local plugins = {
     require("plugins.dap"),
 }
 
+use_latex = 1
 if current_os == "macOS" then
     table.insert(plugins, require("plugins.markdown"))
+    table.insert(plugins, require("plugins.latex"))
+elseif use_latex == 1 then
     table.insert(plugins, require("plugins.latex"))
 end
 
