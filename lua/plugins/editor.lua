@@ -414,4 +414,28 @@ return {
             })
         end,
     },
+
+    -- Workflow:
+    -- 1. Open your project in Neovim
+    -- 2. Run :SftpSetup(<leader>fs) to configure your server connection
+    -- 3. Open any file you want to upload, Run :SftpUpload(<leader>fu) to upload the current file
+    -- 4. Run :SftpUploadDir(<leader>fU) , Select from the list of local files and directories:
+    {
+        "rafaelsieber/sftp-nvim",
+        config = function()
+            require("sftp-nvim").setup()
+        end,
+        cmd = {
+            "SftpSetup",
+            "SftpUpload",
+            "SftpConfig",
+            "SftpDownload"
+        },
+        keys = {
+            { "<leader>fs", "<cmd>SftpSetup<cr>",    desc = "Setup SFTP config" },
+            { "<leader>fu", "<cmd>SftpUpload<cr>",   desc = "Upload current file via SFTP" },
+            { "<leader>fc", "<cmd>SftpConfig<cr>",   desc = "Show SFTP config" },
+            { "<leader>fd", "<cmd>SftpDownload<cr>", desc = "Download file from remote via SFTP" },
+        },
+    },
 }
