@@ -103,9 +103,15 @@ return {
                         { "location", padding = { left = 0, right = 1 } },
                     },
                     lualine_z = {
-                        function()
-                            return " " .. os.date("%R")
-                        end,
+                        {
+                            function()
+                                local enc = vim.bo.fileencoding
+                                if enc == "" then
+                                    enc = vim.o.encoding
+                                end
+                                return "󰈡 " .. string.upper(enc)
+                            end,
+                        },
                     },
                 },
                 extensions = { "nvim-tree", "lazy" },
