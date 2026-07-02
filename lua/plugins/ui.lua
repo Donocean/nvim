@@ -86,7 +86,7 @@ return {
                         {
                             function()
                                 local conda_env = vim.fn.getenv("CONDA_DEFAULT_ENV")
-                                if conda_env and conda_env ~= "" then
+                                if vim.bo.filetype == "python" and conda_env and conda_env ~= "" then
                                     local conda_icon = "  "
                                     return conda_icon .. conda_env
                                 else
