@@ -165,7 +165,7 @@ return {
     {
         "williamboman/mason.nvim",
         cmd = "Mason",
-        keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+        keys = { { "<leader>um", "<cmd>Mason<cr>", desc = "Mason" } },
         opts = {
             ensure_installed = {
                 "shfmt",
@@ -218,22 +218,23 @@ return {
         "nvimdev/guard.nvim",
         event = "VeryLazy",
         keys = {
-            { "<leader>cf", "<cmd>GuardFmt<cr>",  desc = "Format File" },
-            { "<leader>cf", "=<cmd>GuardFmt<cr>", desc = "Format Range", mode = "v" },
+            { "<leader>cf", "<cmd>Guard fmt<cr>", desc = "Format File" },
+            { "<leader>cf", "<cmd>Guard fmt<cr>", desc = "Format Range", mode = "v" },
         },
-        opts = {
-            -- the only options for the setup function
-            fmt_on_save = false,
-            -- Use lsp if no formatter was defined for this filetype
-            lsp_as_default_formatter = true,
-        },
-        config = function(_, opts)
+        config = function()
             local ft = require("guard.filetype")
             -- Specify clang-format file
             local cfg_path = vim.fn.stdpath("config") .. "/lua/plugins/lsp/.clang-format"
 
+            vim.g.guard_config = {
+                fmt_on_save = false,
+                lsp_as_default_formatter = true,
+                save_on_fmt = true,
+                auto_lint = false,
+            }
+
             if require("util").autoformat then
-                vim.cmd("GuardEnable")
+                vim.cmd("Guard enable-fmt")
             end
 
             ft("c,cpp"):fmt({
@@ -244,26 +245,24 @@ return {
 
             ft("python"):fmt({
                 cmd = "ruff",
-                args = { 'format', '-' },
+                args = { "format", "-" },
                 stdin = true,
             })
 
             ft("yaml"):fmt({
                 cmd = "yamlfmt",
-                args = { '-' },
+                args = { "-" },
                 stdin = true,
             })
 
-            ft("tex"):fmt("tex-fmt")
+            -- ft("tex"):fmt("tex-fmt")
 
             ft("xml"):fmt({
-                cmd = "xmlformat",
-                args = { '-' },
+                cmd = "xmllint",
+                args = { "--format", "-" },
                 stdin = true,
             })
 
-            -- call setup at last
-            require("guard").setup(opts)
         end,
     },
 

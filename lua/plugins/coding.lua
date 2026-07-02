@@ -142,12 +142,6 @@ return {
         event = "VeryLazy"
     },
 
-    -- enhance dot(.)
-    {
-        "tpope/vim-repeat",
-        event = "VeryLazy"
-    },
-
     -- auto remove highlight serach
     {
         "asiryk/auto-hlsearch.nvim",
