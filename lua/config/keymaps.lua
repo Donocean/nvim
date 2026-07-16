@@ -129,7 +129,13 @@ map(
     "n",
     "<leader>cc",
     [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-    { desc = "rename word under current cursor" }
+    { desc = "modify word under current cursor", silent = false }
+)
+map(
+    "v",
+    "<leader>cc",
+    [["hy:%s/\V<C-r>=escape(@h, '\/')<CR>/<C-r>=escape(@h, '\/&')<CR>/gI<Left><Left><Left>]],
+    { desc = "modify selected text", silent = false }
 )
 
 map("n", "<leader>W", function()
