@@ -111,3 +111,99 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
         end)
     end,
 })
+
+vim.api.nvim_create_user_command("SudoWrite", function()
+    local buf = vim.api.nvim_get_current_buf()
+    local win = vim.api.nvim_get_current_win()
+    local target = vim.api.nvim_buf_get_name(buf)
+
+    if target == "" then
+        vim.notify("当前 buffer 没有文件名", vim.log.levels.ERROR)
+        return
+    end
+
+    target = vim.fn.fnamemodify(target, ":p")
+
+    local tmp = vim.fn.tempname()
+    local changedtick = vim.api.nvim_buf_get_changedtick(buf)
+
+    -- 当前内容写入临时文件
+    vim.api.nvim_buf_call(buf, function()
+        vim.cmd("silent noautocmd write! " .. vim.fn.fnameescape(tmp))
+    end)
+
+    -- 写的是临时文件，所以原 buffer 仍然保持 modified
+    vim.bo[buf].modified = true
+    vim.cmd("botright 8new")
+
+    local term_win = vim.api.nvim_get_current_win()
+    local term_buf = vim.api.nvim_get_current_buf()
+
+    local job = vim.fn.termopen({
+        "sudo",
+        "dd",
+        "if=" .. tmp,
+        "of=" .. target,
+        "status=none",
+        "conv=fsync",
+    }, {
+        on_exit = function(_, exit_code)
+            vim.schedule(function()
+                vim.fn.delete(tmp)
+
+                if exit_code == 0 then
+                    -- sudo 执行期间如果文件没再次修改，则标记为已保存
+                    if vim.api.nvim_buf_is_valid(buf)
+                        and vim.api.nvim_buf_get_changedtick(buf) == changedtick then
+                        vim.bo[buf].modified = false
+                    end
+
+                    -- 先关闭 terminal 窗口
+                    if vim.api.nvim_win_is_valid(term_win) then
+                        vim.api.nvim_win_close(term_win, true)
+                    end
+
+                    -- 再彻底删除 terminal buffer
+                    if vim.api.nvim_buf_is_valid(term_buf) then
+                        vim.api.nvim_buf_delete(term_buf, { force = true })
+                    end
+
+                    -- 回到原来的编辑窗口
+                    if vim.api.nvim_win_is_valid(win) then
+                        vim.api.nvim_set_current_win(win)
+                    end
+
+                    vim.notify("sudo write: " .. target)
+                else
+                    vim.notify(
+                        "sudo write failed: exit code " .. exit_code,
+                        vim.log.levels.ERROR
+                    )
+                end
+            end)
+        end,
+    })
+
+    if job <= 0 then
+        vim.fn.delete(tmp)
+
+        if vim.api.nvim_win_is_valid(term_win) then
+            vim.api.nvim_win_close(term_win, true)
+        end
+
+        if vim.api.nvim_buf_is_valid(term_buf) then
+            vim.api.nvim_buf_delete(term_buf, { force = true })
+        end
+
+        vim.notify("无法启动 sudo terminal", vim.log.levels.ERROR)
+        return
+    end
+
+    vim.cmd("startinsert")
+end, {})
+vim.cmd([[
+cnoreabbrev <expr> w!!
+    \ getcmdtype() ==# ':' && getcmdline() ==# 'w!!'
+    \ ? 'SudoWrite'
+    \ : 'w!!'
+]])

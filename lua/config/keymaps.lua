@@ -3,9 +3,13 @@ local Util = require("util")
 ---@mode can be following parameters
 -- nmap Normal
 -- vmap Visual and Select
--- smap Select
+-- smap Select (类似普通编辑器中的“选中文字”状态,
+--              在 Select 模式中直接输入字符，会替换被选中的内容)
+--      gh          字符 Select 模式
+--      gH          行 Select 模式
+--      g Ctrl-h    块 Select 模式
 -- xmap Visual
--- omap Operator-pending
+-- omap Operator-pending (在 Normal 模式按 d、c、y 等操作符)
 -- map! Insert and Command-line
 -- imap Insert
 -- lmap Insert, Command-line, Lang-Arg
