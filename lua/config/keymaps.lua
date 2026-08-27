@@ -88,7 +88,7 @@ map({ "i", "v", "n", "s" }, "<C-s>", function()
     end
 
     if vim.bo.readonly or not writable then
-        vim.cmd("Suw")
+        vim.cmd("SudoWrite")
     else
         vim.cmd("write")
     end
