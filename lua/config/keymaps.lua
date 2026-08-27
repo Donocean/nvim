@@ -68,7 +68,15 @@ map({ "n", "v", "o" }, "0", "^", { desc = "Start of the line" })
 map({ "n", "v", "o" }, ")", "$", { desc = "End of the line" })
 
 -- save file
-map({ "i", "v", "n", "s" }, "<C-s>", "<cmd>w<cr>", { desc = "Save file" })
+map({ "i", "v", "n", "s" }, "<C-s>", function()
+    local file = vim.api.nvim_buf_get_name(0)
+
+    if file ~= "" and (vim.bo.readonly or vim.fn.filewritable(file) ~= 1) then
+        vim.cmd("SudoWrite")
+    else
+        vim.cmd("write")
+    end
+end, { desc = "Save file" })
 -- better ctrl-c when use visul vertical mod to add some text
 map("i", "<c-c>", "<esc>")
 
