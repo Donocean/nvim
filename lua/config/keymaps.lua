@@ -71,8 +71,24 @@ map({ "n", "v", "o" }, ")", "$", { desc = "End of the line" })
 map({ "i", "v", "n", "s" }, "<C-s>", function()
     local file = vim.api.nvim_buf_get_name(0)
 
-    if file ~= "" and (vim.bo.readonly or vim.fn.filewritable(file) ~= 1) then
-        vim.cmd("SudoWrite")
+    if file == "" then
+        vim.cmd("write")
+        return
+    end
+
+    local writable
+
+    if vim.fn.filereadable(file) == 1 then
+        -- 已存在文件：检查文件本身
+        writable = vim.fn.filewritable(file) == 1
+    else
+        -- 新文件：检查父目录
+        local dir = vim.fn.fnamemodify(file, ":h")
+        writable = vim.fn.filewritable(dir) == 2
+    end
+
+    if vim.bo.readonly or not writable then
+        vim.cmd("Suw")
     else
         vim.cmd("write")
     end
