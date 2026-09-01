@@ -87,7 +87,7 @@ map({ "i", "v", "n", "s" }, "<C-s>", function()
         writable = vim.fn.filewritable(dir) == 2
     end
 
-    if vim.bo.readonly or not writable then
+    if vim.bo.readonly or not writable and not vim.bo.filetype == 'oil' then
         vim.cmd("SudoWrite")
     else
         vim.cmd("write")
