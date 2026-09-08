@@ -37,15 +37,9 @@ local plugins = {
     require("plugins.treesitter"),
     require("plugins.flash"),
     require("plugins.dap"),
+    require("plugins.markdown"),
+    require("plugins.latex"),
 }
-
-use_latex = 1
-if current_os == "macOS" then
-    table.insert(plugins, require("plugins.markdown"))
-    table.insert(plugins, require("plugins.latex"))
-elseif use_latex == 1 then
-    table.insert(plugins, require("plugins.latex"))
-end
 
 require("lazy").setup(
     plugins,

@@ -63,6 +63,17 @@ map("n", "<a-h>", "<cmd>vertical resize-5<cr>", { desc = "Decrease window width"
 map("n", "<a-l>", "<cmd>vertical resize+5<cr>", { desc = "Increase window width" })
 
 map({ "n", "x" }, "gw", "*N", { desc = "Search word under cursor" })
+map("x", "gw", function()
+    local old = vim.fn.getreg('"')
+    local old_type = vim.fn.getregtype('"')
+
+    vim.cmd("normal! y")
+    local text = vim.fn.getreg('"')
+
+    vim.fn.setreg('"', old, old_type)
+    vim.fn.setreg("/", "\\V" .. vim.fn.escape(text, "\\"))
+    vim.opt.hlsearch = true
+end, { desc = "Search visual selection" })
 
 map({ "n", "v", "o" }, "0", "^", { desc = "Start of the line" })
 map({ "n", "v", "o" }, ")", "$", { desc = "End of the line" })
