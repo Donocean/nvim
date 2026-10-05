@@ -201,9 +201,87 @@ vim.api.nvim_create_user_command("SudoWrite", function()
 
     vim.cmd("startinsert")
 end, {})
+
+-- sudo save the file
 vim.cmd([[
 cnoreabbrev <expr> w!!
     \ getcmdtype() ==# ':' && getcmdline() ==# 'w!!'
     \ ? 'SudoWrite'
     \ : 'w!!'
 ]])
+
+-- attach to a running c/cpp process
+vim.api.nvim_create_user_command("DapAttach", function(opts)
+    local dap = require("dap")
+    local name = vim.trim(opts.args)
+
+    if name == "" then
+        vim.notify(
+            "Usage: :DapAttach <process_name>",
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    -- 查找完全匹配进程名的进程
+    local processes = vim.fn.systemlist({
+        "pgrep",
+        "-a",
+        "-x",
+        name,
+    })
+
+    if vim.v.shell_error ~= 0 or #processes == 0 then
+        vim.notify(
+            "Process not found: " .. name,
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    -- 获取 PID
+    local pid
+    if #processes == 1 then
+        pid = tonumber(processes[1]:match("^(%d+)"))
+    else
+        local choices = { "Select process:" }
+        for i, proc in ipairs(processes) do
+            table.insert(
+                choices,
+                string.format("%d. %s", i, proc)
+            )
+        end
+        local choice = vim.fn.inputlist(choices)
+        if choice < 1 or choice > #processes then
+            return
+        end
+        pid = tonumber(processes[choice]:match("^(%d+)"))
+    end
+
+    if not pid then
+        vim.notify(
+            "Failed to get PID for: " .. name,
+            vim.log.levels.ERROR
+        )
+        return
+    end
+
+    -- CodeLLDB attach
+    vim.notify(
+        string.format(
+            "CodeLLDB attach:\nProcess: %s\nPID: %d",
+            name,
+            pid
+        )
+    )
+    dap.run({
+        name = "Debug Attach: " .. name,
+        type = "codelldb",
+        request = "attach",
+        pid = pid,
+        cwd = vim.fn.getcwd(),
+    })
+end, {
+    nargs = 1,
+    desc = "Attach CodeLLDB to process by executable name",
+})
