@@ -142,13 +142,4 @@ return {
         event = "VeryLazy"
     },
 
-    -- auto remove highlight serach
-    {
-        "asiryk/auto-hlsearch.nvim",
-        event = "VeryLazy",
-        config = function()
-            require("auto-hlsearch").setup()
-        end
-    },
-
 }
