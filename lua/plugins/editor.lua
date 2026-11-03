@@ -418,6 +418,7 @@ return {
     -- Workflow:
     -- 1. Open your project in Neovim
     -- 2. Run :SftpSetup(<leader>fs) to configure your server connection
+        -- remote_path: must use absolutely path when setup sftp config
     -- 3. Open any file you want to upload, Run :SftpUpload(<leader>fu) to upload the current file
     -- 4. Run :SftpUploadDir(<leader>fU) , Select from the list of local files and directories:
     {
